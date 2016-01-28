@@ -1,0 +1,18 @@
+node_modules
+npm-debug.log*
+.DS_Store
+
+# ignore built static files
+dist/
+webpack-assets.json
+
+# cordova ignores
+cordova/www/*
+cordova/www/**.*
+!cordova/www/.gitkeep
+cordova/plugins/
+cordova/platforms/
+
+# cordova build config
+cordova-build/*.json
+cordova-build/config/*.json

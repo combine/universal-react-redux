@@ -1,0 +1,9 @@
+//
+// This stylesheet is reserved for quick fixes and nasty hacks.
+// See http://sass-guidelin.es/#shame-file
+//
+
+a:active,
+a:focus {
+  outline: none !important;
+}
