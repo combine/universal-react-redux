@@ -1,0 +1,27 @@
+// This project follows the 7-1 Pattern
+// http://sass-guidelin.es/#the-7-1-pattern
+
+@import 'utils/colors';
+@import 'utils/variables';
+@import 'utils/functions';
+
+// vendor styles
+@import 'vendors/bootstrap';
+
+// base styles
+@import 'base/typography';
+@import 'base/base';
+
+// components
+// @import 'components/my-component';
+@import 'components/header';
+
+// layout styles (header and footer)
+@import 'layout/header';
+@import 'layout/footer';
+
+// individual page styles here. add them here as needed.
+@import 'pages/home';
+
+// shame file
+@import 'shame/shame';
