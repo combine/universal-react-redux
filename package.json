@@ -1,7 +1,7 @@
 {
   "name": "react-redux-starter",
   "description": "A universal starter kit built with react, react-router and redux. Server rendering with react and express, bundles with Webpack with hot module reloading and hot style reloading with SCSS support. Bonus: Cordova support.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "main": "client/index.js",
   "repository": {
