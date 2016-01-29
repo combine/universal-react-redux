@@ -27,11 +27,7 @@ const rootElement = document.getElementById('app');
 // rendering.
 const history = __CORDOVA__ ? hashHistory : browserHistory;
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore(initialState, {
-  history: history,
-  dispatchRouteChanges: true,
-  rootElement: rootElement
-});
+const store = configureStore(initialState, history);
 
 /* FastClick
  * Disables the 300ms delay for mobile apps. Comment out or add a conditional

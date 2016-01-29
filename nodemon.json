@@ -1,6 +1,5 @@
 {
   "watch": [
-    "common/config/store.js",
     "server/**/*.js",
     "server/**/*.json",
     "common/templates/server.html"

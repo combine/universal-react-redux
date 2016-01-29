@@ -5,7 +5,6 @@ import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext, match } from 'react-router';
 import { routes } from '../common/routes';
-import { rootPath } from '../common/util';
 import createLocation from 'history/lib/createLocation';
 import config from './config';
 import configureStore from '../common/config/store';
@@ -88,15 +87,13 @@ function renderFullPage(html, initialState, renderProps) {
   let favicon = assets['./common/assets/images/favicon.png'];
   let stylesheet = assetHost + 'styles.css';
   let bundleJs = assetHost + 'bundle.js';
-  let appClass = rootPath(renderProps.location.pathname);
   return compiledTemplate({
     html,
     title,
     favicon,
     stylesheet,
     bundleJs,
-    initialState,
-    appClass: appClass ? 'page-' + appClass : null
+    initialState
   });
 }
 
