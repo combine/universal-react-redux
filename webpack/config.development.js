@@ -26,6 +26,9 @@ var plugins = (hot ? [
   // this should always be last so it can be replaceable by config.cordova.js or
   // something else that overrides it
   new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': JSON.stringify('development')
+    },
     '__CORDOVA__': false,
     '__PRODUCTION__': false,
     '__DEVELOPMENT__': true,
