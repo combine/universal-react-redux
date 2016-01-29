@@ -32,6 +32,9 @@ webpackConfig.output = {
 webpackConfig.plugins = webpackConfig.plugins.slice(0, -2).concat(
   // ...and replace it with the new globals set here
   new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': JSON.stringify(env)
+    },
     '__CORDOVA__': true,
     '__PRODUCTION__': env == 'production',
     '__DEVELOPMENT__': env != 'production',

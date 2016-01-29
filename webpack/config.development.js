@@ -15,6 +15,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var IsomorphicPlugin  = require('webpack-isomorphic-tools/plugin');
 
 var plugins = (hot ? [
+  new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin()
 ] : [
