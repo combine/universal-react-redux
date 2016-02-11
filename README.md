@@ -6,7 +6,7 @@ and hot style reloading with SCSS support. Bonus: Cordova support.
 
 ## Prerequisites
 
-* Node >4.2.x is recommended.
+* Node 4.2+ is recommended.
 
 * Webpack
 ```
