@@ -11,7 +11,7 @@ import configureStore from '../common/config/store';
 import serveStatic from 'serve-static';
 import fs from 'fs';
 import compression from 'compression';
-import template from 'lodash/string/template';
+import template from 'lodash/template';
 
 // Tell node.js to load html files as a string
 require.extensions['.html'] = (module, filename) => {

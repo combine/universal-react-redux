@@ -35,7 +35,7 @@
     "postinstall": "if [ \"$NODE_ENV\" = \"production\" ]; then npm run build:production; fi"
   },
   "devDependencies": {
-    "babel-eslint": "5.0.0-beta6",
+    "babel-eslint": "5.0.0-beta9",
     "chai": "3.5.0",
     "chai-immutable": "1.5.3",
     "cordova-lib": "6.0.0",
