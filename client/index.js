@@ -6,6 +6,7 @@ import { Router } from 'react-router';
 import { routes } from '../common/routes';
 import configureStore from '../common/config/store';
 import { browserHistory, hashHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 /* Images
  * This space is reserved for images that are required by server rendering,
@@ -25,9 +26,12 @@ const rootElement = document.getElementById('app');
 
 // Creates the Redux store based on the initial state passed down by the server
 // rendering.
-const history = __CORDOVA__ ? hashHistory : browserHistory;
+const store = configureStore(initialState);
+const history = syncHistoryWithStore(
+  (__CORDOVA__ ? hashHistory : browserHistory),
+  store
+);
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore(initialState, history);
 
 /* FastClick
  * Disables the 300ms delay for mobile apps. Comment out or add a conditional

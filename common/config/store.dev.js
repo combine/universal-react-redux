@@ -2,7 +2,6 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import persistState from 'redux-localstorage';
-import { syncHistory } from 'react-router-redux';
 import DevTools from '../shared/containers/DevTools';
 
 /* localStorage Persisted States
@@ -12,7 +11,7 @@ import DevTools from '../shared/containers/DevTools';
  */
 const persistedStates = [];
 
-export default function configureStore(initialState, history = null) {
+export default function configureStore(initialState, localStorage = true) {
   /* Middleware
    * Configure this array with the middleware that you want included. thunk
    * is included by default, and react-router-redux's syncHistory is also
@@ -27,9 +26,8 @@ export default function configureStore(initialState, history = null) {
 
   // Client-side enhancers and middleware
   if (isBrowser()) {
-    enhancers.push(persistState(persistedStates));
-    if (history) {
-      middleware.push(syncHistory(history));
+    if (localStorage) {
+      enhancers.push(persistState(persistedStates));
     }
   }
 
