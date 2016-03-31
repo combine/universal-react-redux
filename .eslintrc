@@ -33,12 +33,17 @@
     "__CORDOVA__": true,
     "__PRODUCTION__": true,
     "__DEVELOPMENT__": true,
-    "__BASE_URL__": true
+    "__BASE_URL__": true,
+    expect: true
   },
   "extends": "eslint:recommended",
-  "ecmaFeatures": {
-    "jsx": true,
-    "experimentalObjectRestSpread": true
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "ecmaVersion": 6
   },
   "plugins": [
       "react"
