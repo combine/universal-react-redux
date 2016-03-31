@@ -15,7 +15,11 @@ new WebpackDevServer(webpack(config), {
   quiet: false,
   headers: {'Access-Control-Allow-Origin': '*'},
   stats: {
-    colors: true
+    colors: true,
+    hash: false,
+    version: false,
+    chunks: false,
+    children: false
   }
 }).listen(config.devServerPort, hostname, function errorCallback(err) {
   if (err) {
