@@ -26,12 +26,12 @@ const rootElement = document.getElementById('app');
 
 // Creates the Redux store based on the initial state passed down by the server
 // rendering.
+const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(
   (__CORDOVA__ ? hashHistory : browserHistory),
   store
 );
-const initialState = window.__INITIAL_STATE__;
 
 /* FastClick
  * Disables the 300ms delay for mobile apps. Comment out or add a conditional
