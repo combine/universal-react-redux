@@ -5,7 +5,6 @@ import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext, match } from 'react-router';
 import { routes } from '../common/routes';
-import createLocation from 'history/lib/createLocation';
 import config from './config';
 import configureStore from '../common/config/store';
 import serveStatic from 'serve-static';
@@ -34,9 +33,6 @@ app.use('/dist', serveStatic(path.join(__dirname, '../dist')));
 app.use(handleRender);
 
 function handleRender(req, res) {
-  // history location
-  const location = createLocation(req.url);
-
   // Compile an initial state
   // This can come from the server somewhere if you want to pre-populate the
   // app's initial state.
@@ -50,7 +46,7 @@ function handleRender(req, res) {
 
   // See react-router's Server Rendering section:
   // https://github.com/rackt/react-router/blob/master/docs/guides/advanced/ServerRendering.md
-  match({ routes, location }, (error, redirectLocation, renderProps) => {
+  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(301, redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
