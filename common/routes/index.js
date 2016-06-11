@@ -1,14 +1,16 @@
 'use strict';
 
-import App from '../routes/app/containers/App';
+import App from 'containers/App';
+import HomeRoute from 'routes/home';
+import ExampleRoute from 'routes/example';
 
 export const routes = [
   {
     path: '/',
     component: App,
-    indexRoute: require('./home'),
+    indexRoute: HomeRoute,
     childRoutes: [
-      require('./example')
+      ExampleRoute
     ]
   }
 ];

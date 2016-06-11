@@ -3,9 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { routes } from '../common/routes';
-import configureStore from '../common/config/store';
-import { browserHistory, hashHistory } from 'react-router';
+import { routes } from 'routes';
+import configureStore from 'config/store';
+import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 /* Images
@@ -28,18 +28,7 @@ const rootElement = document.getElementById('app');
 // rendering.
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
-const history = syncHistoryWithStore(
-  (__CORDOVA__ ? hashHistory : browserHistory),
-  store
-);
-
-/* FastClick
- * Disables the 300ms delay for mobile apps. Comment out or add a conditional
- * for __CORDOVA__ if you only want this in your Cordova app.
- */
-document.addEventListener('DOMContentLoaded', () => {
-  require('fastclick').attach(document.body);
-}, false);
+const history = syncHistoryWithStore(browserHistory, store);
 
 // Render the app!
 ReactDOM.render(

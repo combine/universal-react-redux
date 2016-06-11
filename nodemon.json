@@ -2,6 +2,6 @@
   "watch": [
     "server/**/*.js",
     "server/**/*.json",
-    "common/templates/server.html"
+    "common/layouts/server.html"
   ]
 }

@@ -1,8 +1,8 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
+import rootReducer from 'reducers';
 import persistState from 'redux-localstorage';
-import DevTools from '../shared/containers/DevTools';
+import DevTools from 'containers/DevTools';
 
 /* localStorage Persisted States
  * Set up persisted state properties via localStorage. They should be added

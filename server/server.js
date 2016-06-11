@@ -4,9 +4,9 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext, match } from 'react-router';
-import { routes } from '../common/routes';
+import { routes } from 'routes';
 import config from './config';
-import configureStore from '../common/config/store';
+import configureStore from 'config/store';
 import serveStatic from 'serve-static';
 import fs from 'fs';
 import compression from 'compression';
@@ -21,7 +21,7 @@ const app = new Express();
 const port = config.port;
 
 // cache the main layout template with lodash
-const compiledTemplate = template(require('../common/templates/server.html'));
+const compiledTemplate = template(require('../common/layouts/server.html'));
 
 // gzip
 app.use(compression());

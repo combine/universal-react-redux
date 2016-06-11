@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import DevTools from '../../../shared/containers/DevTools';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
+import DevTools from 'containers/DevTools';
 
 export default class App extends Component {
   render() {
