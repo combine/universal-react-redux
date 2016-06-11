@@ -1,12 +1,13 @@
 # react-redux-starter
 
-A universal starter kit built with react, react-router and redux. Server
-rendering with react and express, bundles with Webpack with hot module reloading
-and hot style reloading with SCSS support.
+A universal starter kit built with ES2015, react, react-router and redux. Server
+rendering with react and express. Bundled with Webpack with hot module and css
+reloading with SCSS support.
 
 ## Prerequisites
 
-* Node 4.2+ is recommended.
+* Node.js 6+ is **required**, as the Webpack configuration files uses ES2015
+extensively.
 
 * Webpack
 ```
@@ -50,29 +51,17 @@ Direct your browser to `http://localhost:3000`.
 │   │       ├── shame
 │   │       ├── utils
 │   │       └── vendors
+│   ├── components            # "Dumb" components directory
 │   ├── config                # Contains the redux store configuration. Add anything else you like.
+│   ├── containers            # "Smart" containers directory
+│   ├── layouts               # Layout files
 │   ├── middleware            # Custom redux middleware can be placed here.
 │   ├── reducers              # Redux reducers
 |   |   └── index.js          # Root reducer. Imports all other reducers.
 │   ├── routes                # Routes each have an index.js which exports a react-router Route.
-│   │   ├── app
-│   │   │   ├── components
-│   │   │   ├── containers
-│   │   │   └── index.js
-│   │   ├── example           # The name of route.
-│   │   │   ├── components    # "Dumb" components
-│   │   │   └── containers    # "Smart" containers
-│   │   │   └── index.js      # Exports a react-router route. Uses [alternate configuration](https://github.com/rackt/react-router/blob/master/docs/guides/basics/RouteConfiguration.md#alternate-configuration)
-│   │   └── home
-│   │       └── containers
-│   │   │   └── index.js
-│   ├── selectors             # Memoized selectors. See https://github.com/rackt/reselect
-│   ├── shared                # Shared actions and components and do not belong to a single route.
-│   │   ├── actions
-│   │   └── components
-│   ├── layouts               # Layout files
-│   └── util                  # Utility methods
-│   └── config
+│   │   ├── example.js        # Individual routing file
+│   │   └── index.js          # Root route
+│   └── selectors             # Memoized selectors. See https://github.com/rackt/reselect
 ├── server                    # Server-side code.
 └── webpack                   # Webpack configuration files.
 ```
@@ -126,16 +115,3 @@ heroku config:set ASSET_HOST=/dist/
 # OR
 heroku config:set ASSET_HOST=https://s3.amazonaws.com/mybucket/myasssets/
 ```
-
-## Additional Notes
-
-If you're debugging in a mobile browser and you want to access your project
-locally, do the following:
-
-- Make sure your mobile device on the same network as your desktop/laptop.
-- Run `npm start` with a `HOSTNAME` environment variable set to your computer's
-local ip address (the computer that your dev environment is on):
-```
-HOSTNAME=10.0.1.3 npm start
-```
-- Browse to `http://10.0.1.3:3000` on your mobile device.
