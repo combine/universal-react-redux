@@ -86,7 +86,6 @@
     "json-loader": "0.5.4",
     "lodash": "4.13.1",
     "node-sass": "3.7.0",
-    "npm-check-updates": "2.6.7",
     "react": "15.1.0",
     "react-dom": "15.1.0",
     "react-redux": "4.4.5",
