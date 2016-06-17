@@ -14,8 +14,8 @@
   },
   "scripts": {
     "start": "npm run build:development && npm run start:development",
-    "start:production": "node server",
-    "start:development": "npm run start:development:client & npm run start:development:server",
+    "start:production": "NODE_ENV=production node server",
+    "start:development": "NODE_ENV=development npm run start:development:client & npm run start:development:server",
     "start:development:client": "node webpack/config.development.hot",
     "start:development:server": "$(npm bin)/nodemon server",
     "build:development": "$(npm bin)/webpack --progress --colors --display-error-details --config webpack/config.development.js",
