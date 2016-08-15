@@ -30,6 +30,8 @@
     "node": true
   },
   "globals": {
+    '__CORDOVA__': true,
+    '__BASE_URL__': true,
     expect: true
   },
   "extends": "eslint:recommended",
