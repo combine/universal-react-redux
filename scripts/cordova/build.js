@@ -32,11 +32,16 @@ const cordovaBuild = (options) => {
   process.chdir('./cordova');
 
   // build with options and distribute to Fabric if specified
-  return cordova.raw.build(buildOpts).then(function() {
-    if (distribute) {
-      fabric.distribute(platforms, target);
+  return cordova.raw.build(buildOpts).then(
+    function() {
+      if (distribute) {
+        fabric.distribute(platforms, target);
+      }
+    },
+    function(error) {
+      console.log('Build failed:', error);
     }
-  });
+  );
 };
 
 module.exports = cordovaBuild;
