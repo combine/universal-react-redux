@@ -1,10 +1,10 @@
 'use strict';
 
 import App from 'containers/App';
-import HomeRoute from 'routes/home';
-import ExampleRoute from 'routes/example';
+import HomeRoute from './home';
+import ExampleRoute from './example';
 
-export const routes = [
+const Routes = [
   {
     path: '/',
     component: App,
@@ -14,3 +14,5 @@ export const routes = [
     ]
   }
 ];
+
+export default Routes;

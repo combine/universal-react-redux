@@ -1,0 +1,16 @@
+// This project follows the 7-1 Pattern
+// http://sass-guidelin.es/#the-7-1-pattern
+
+@import 'utils/colors';
+@import 'utils/variables';
+@import 'utils/functions';
+
+// vendor stylesheets
+@import 'vendors';
+
+// base/global styles
+@import 'base/typography';
+@import 'base/globals';
+
+// shame file
+@import 'shame/shame';

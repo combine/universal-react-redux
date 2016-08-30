@@ -4,9 +4,9 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext, match } from 'react-router';
-import { routes } from 'routes';
+import routes from 'routes';
 import config from './config';
-import configureStore from 'config/store';
+import configureStore from 'store';
 import serveStatic from 'serve-static';
 import fs from 'fs';
 import compression from 'compression';
@@ -80,7 +80,7 @@ function renderFullPage(html, initialState, renderProps) {
   let assets = renderProps.assets.assets;
   let assetHost = config.assetHost;
   let title = config.name;
-  let favicon = assets['./common/assets/images/favicon.png'];
+  let favicon = assets['./common/images/favicon.png'];
   let stylesheet = assetHost + 'styles.css';
   let bundleJs = assetHost + 'bundle.js';
   return compiledTemplate({
@@ -97,6 +97,6 @@ app.listen(port, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`🌎 Application server listening on port ${port}. Open up http://localhost:${port}/ in your browser.`);
+    console.info(`🌎 Application server listening on port ${port}.`);
   }
 });

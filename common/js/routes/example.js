@@ -1,6 +1,8 @@
 import ExampleContainer from 'containers/Example';
 
-module.exports = {
+const ExampleRoute = {
   path: '/example(/:id)',
   component: ExampleContainer
 };
+
+export default ExampleRoute;

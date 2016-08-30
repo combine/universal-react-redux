@@ -1,5 +1,7 @@
 import HomeContainer from 'containers/Home';
 
-module.exports = {
+const HomeRoute = {
   component: HomeContainer
 };
+
+export default HomeRoute;

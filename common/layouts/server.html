@@ -1,15 +1,15 @@
 <!doctype html>
 <html>
 <head>
-<title><%= title %></title>
-<meta charset="utf-8" />
-<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width height=device-height" />
-<link rel="shortcut icon" type="image/x-icon" href="<%= favicon %>">
-<link type="text/css" rel="stylesheet" href="<%= stylesheet %>" />
+  <title><%= title %></title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width height=device-height" />
+  <link rel="shortcut icon" type="image/x-icon" href="<%= favicon %>">
+  <link type="text/css" rel="stylesheet" href="<%= stylesheet %>" />
 </head>
 <body>
-<div id="app"><%= html %></div>
-<script>window.__INITIAL_STATE__ = <%= JSON.stringify(initialState) %>;</script>
-<script src="<%= bundleJs %>"></script>
+  <div id="app"><%= html %></div>
+  <script>window.__INITIAL_STATE__ = <%= JSON.stringify(initialState) %>;</script>
+  <script src="<%= bundleJs %>"></script>
 </body>
 </html>

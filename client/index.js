@@ -3,23 +3,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { routes } from 'routes';
-import configureStore from 'config/store';
-import { browserHistory, hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import configureStore from 'store';
+import routes from 'routes';
 
 /* Images
  * This space is reserved for images that are required by server rendering,
  * e.g. the favicon and any other images that need to be in the base HTML file.
  */
-import '../common/assets/images/favicon.png';
+import '../common/images/favicon.png';
 
 /* Stylesheets
  * Main.scss should @import all the other stylesheets that you need. If you want
  * to use LESS or another preprocessor, you can include it here and update your
  * webpack configure to use the appropriate loader.
  */
-import '../common/assets/stylesheets/main.scss';
+import '../common/css/main.scss';
 
 // The root element of your app
 const rootElement = document.getElementById('app');
@@ -28,10 +28,7 @@ const rootElement = document.getElementById('app');
 // rendering.
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
-const history = syncHistoryWithStore(
-  (__CORDOVA__ ? hashHistory : browserHistory),
-  store
-);
+const history = syncHistoryWithStore(browserHistory, store);
 
 // Render the app!
 ReactDOM.render(

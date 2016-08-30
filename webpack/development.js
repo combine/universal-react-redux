@@ -1,4 +1,4 @@
-const baseConfig = require('./config.base');
+const baseConfig = require('./base');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const plugins = [

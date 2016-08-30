@@ -1,12 +1,30 @@
 const path = require('path');
 const webpack = require('webpack');
-const isomorphicConfig = require('./config.isomorphic');
+const mapValues = require('lodash/mapValues');
+const autoprefixer = require('autoprefixer');
+const isomorphicConfig = require('./isomorphic');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 const host = require('./host')();
 
 const isDev = process.env.NODE_ENV === 'development';
 const isomorphicPlugin = new IsomorphicPlugin(isomorphicConfig).development(isDev);
 
+const resolvePaths = {
+  actions: 'common/js/actions',
+  components: 'common/js/components',
+  containers: 'common/js/containers',
+  constants: 'common/js/constants',
+  css: 'common/css',
+  fonts: 'common/fonts',
+  images: 'common/images',
+  layouts: 'common/layouts',
+  lib: 'common/js/lib',
+  middleware: 'common/js/middleware',
+  reducers: 'common/js/reducers',
+  routes: 'common/js/routes',
+  selectors: 'common/js/selectors',
+  store: 'common/js/store'
+};
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
@@ -19,7 +37,10 @@ module.exports = {
     publicPath: host.ASSET_HOST
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.scss']
+    extensions: ['', '.js', '.jsx', '.scss'],
+    alias: mapValues(resolvePaths, (str) => (
+      path.join(process.cwd(), ...str.split('/'))
+    ))
   },
   module: {
     preLoaders: [{
@@ -41,6 +62,7 @@ module.exports = {
       loaders: ['style', 'raw']
     }]
   },
+  postcss: [autoprefixer],
   plugins: [
     isomorphicPlugin,
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en|es/),

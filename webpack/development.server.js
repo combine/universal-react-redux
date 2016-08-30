@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const baseConfig = require('./config.base');
+const baseConfig = require('./base');
 const host = require('./host')();
-const hot = require('./hot');
+const hmr = require('./hmr');
 
-const entry = hot.entry(host.HOST_URL);
-const plugins = hot.plugins;
-const loaders = hot.loaders;
+const entry = hmr.entry(host.HOST_URL);
+const plugins = hmr.plugins;
+const loaders = hmr.loaders;
 
 const config = Object.assign({}, baseConfig, {
   eslint: { configFile: './.eslintrc' },

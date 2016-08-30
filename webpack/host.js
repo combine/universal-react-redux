@@ -1,8 +1,8 @@
 
 module.exports = (props = {}) => {
   const {
-    PROTOCOL = 'http',
-    OUTPUT_PATH = 'dist/',
+    PROTOCOL = process.env.PROTOCOL || 'http',
+    OUTPUT_PATH = process.env.OUTPUT_PATH || 'dist/',
     PORT = process.env.PORT || 3001,
     HOSTNAME = process.env.HOSTNAME || 'localhost'
   } = props;

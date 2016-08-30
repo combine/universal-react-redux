@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const baseConfig = require('./config.base');
+const baseConfig = require('./base');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
