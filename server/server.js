@@ -82,13 +82,15 @@ function renderFullPage(html, initialState, renderProps) {
   let title = config.name;
   let favicon = assets['./common/images/favicon.png'];
   let stylesheet = assetHost + 'styles.css';
-  let bundleJs = assetHost + 'bundle.js';
+  let vendorJs = assetHost + 'vendor.js';
+  let appJs = assetHost + 'app.js';
   return compiledTemplate({
     html,
     title,
     favicon,
     stylesheet,
-    bundleJs,
+    vendorJs,
+    appJs,
     initialState
   });
 }

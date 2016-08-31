@@ -14,13 +14,6 @@ import routes from 'routes';
  */
 import '../common/images/favicon.png';
 
-/* Stylesheets
- * Main.scss should @import all the other stylesheets that you need. If you want
- * to use LESS or another preprocessor, you can include it here and update your
- * webpack configure to use the appropriate loader.
- */
-import '../common/css/main.scss';
-
 // The root element of your app
 const rootElement = document.getElementById('app');
 

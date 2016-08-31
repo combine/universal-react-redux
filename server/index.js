@@ -5,11 +5,18 @@ require('babel-register');
 // side using webpack's `resolve`.
 require('app-module-path').addPath('common/js');
 
+// css-modules-require-hook package allows us to require css files on the server.
+require('css-modules-require-hook')({
+  extensions: ['.scss'],
+  generateScopedName: require('../package.json').config.css,
+  devMode: process.env.NODE_ENV === 'development'
+});
+
 // this must be equal to the Webpack configuration's "context" parameter
 const basePath = require('path').resolve(__dirname, '..');
 const ISOTools = require('webpack-isomorphic-tools');
 
 // this global variable will be used later in express middleware
-global.ISOTools = new ISOTools(require('../webpack/isomorphic'))
+global.ISOTools = new ISOTools(require('../webpack/iso'))
   .development(process.env.NODE_ENV === 'development')
   .server(basePath, () => require('./server'));

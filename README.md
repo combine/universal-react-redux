@@ -38,32 +38,48 @@ Direct your browser to `http://localhost:3000`.
 
 ## Directory Structure
 ```
-├── client                    # Client-side code.
-├── common                    # Shared code between client and server.
-│   ├── assets                # All fonts, images, stylsheets.
-│   │   ├── fonts
-│   │   ├── images
-│   │   └── stylesheets       # Follows the 7-1 pattern: http://sass-guidelin.es/#the-7-1-pattern
-│   │       ├── base
-│   │       ├── components
-│   │       ├── layout
-│   │       ├── pages
-│   │       ├── shame
-│   │       ├── utils
-│   │       └── vendors
-│   ├── components            # "Dumb" components directory
-│   ├── config                # Contains the redux store configuration. Add anything else you like.
-│   ├── containers            # "Smart" containers directory
-│   ├── layouts               # Layout files
-│   ├── middleware            # Custom redux middleware can be placed here.
-│   ├── reducers              # Redux reducers
-|   |   └── index.js          # Root reducer. Imports all other reducers.
-│   ├── routes                # Routes each have an index.js which exports a react-router Route.
-│   │   ├── example.js        # Individual routing file
-│   │   └── index.js          # Root route
-│   └── selectors             # Memoized selectors. See https://github.com/rackt/reselect
-├── server                    # Server-side code.
-└── webpack                   # Webpack configuration files.
+├── README.md
+├── client
+│   └── index.js
+├── common
+│   ├── css
+│   ├── fonts
+│   ├── images
+│   ├── js
+│   │   ├── actions
+│   │   ├── components            # "Dumb" components
+│   │   ├── containers            # Smart containers
+│   │   ├── lib                   # Misc. libraries like helpers, etc.
+│   │   ├── middleware            # Middleware for redux
+│   │   ├── reducers              # Redux reducers
+│   │   ├── routes                # Routes each have an index.js which exports a react-router Route.
+│   │   ├── selectors             # Selectors for getting state data
+│   │   └── store                 # Store configuration for production and dev.
+│   └── layouts                   # Layout files to be rendered by the server.
+├── nodemon.json
+├── package.json
+├── server
+│   ├── config.js
+│   ├── index.js
+│   └── server.js
+├── webpack
+│   ├── base.js
+│   ├── development.js
+│   ├── development.server.js
+│   ├── hmr.js
+│   ├── host.js
+│   ├── isomorphic.js
+│   └── production.js
+```
+
+## CSS Modules
+This project uses [CSS Modules](https://github.com/css-modules/css-modules).
+Class names should be in `camelCase`. Place the css file as a sibling to the
+component with the same name, for example:
+```
+├── components
+│   ├── Header.js
+│   ├── Header.scss
 ```
 
 ## Writing Tests
@@ -118,7 +134,3 @@ heroku config:set ASSET_HOST=/dist/
 # OR
 heroku config:set ASSET_HOST=https://s3.amazonaws.com/mybucket/myasssets/
 ```
-
-## Building Cordova Apps
-
-Please see [Building Cordova Apps](docs/cordova.md)

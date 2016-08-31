@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const mapValues = require('lodash/mapValues');
 const autoprefixer = require('autoprefixer');
-const isomorphicConfig = require('./isomorphic');
+const isomorphicConfig = require('./iso');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 const host = require('./host')();
 
@@ -28,12 +28,30 @@ const resolvePaths = {
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
-  entry: [
-    './client/index'
-  ],
+  entry: {
+    vendor: [
+      'babel-polyfill',
+      'classnames',
+      'history',
+      'lodash',
+      'jquery',
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router',
+      'react-router-redux',
+      'redux',
+      'redux-localstorage',
+      'redux-thunk',
+      'reselect'
+    ],
+    app: [
+      './client/index'
+    ]
+  },
   output: {
     path: path.join(__dirname, ('../' + host.OUTPUT_PATH)),
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: host.ASSET_HOST
   },
   resolve: {
@@ -43,24 +61,28 @@ module.exports = {
     ))
   },
   module: {
-    preLoaders: [{
-      test: /\.jsx$|\.js$/,
-      loader: 'eslint-loader',
-      exclude: /node_modules/
-    }],
-    loaders: [{
-      test: /\.json$/,
-      loader: 'json'
-    }, {
-      test: isomorphicPlugin.regular_expression('images'),
-      loader: 'url-loader?limit=10240'
-    }, {
-      test: /\.(woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]*)?$/,
-      loader: 'file'
-    }, {
-      test: /\.css?$/,
-      loaders: ['style', 'raw']
-    }]
+    preLoaders: [
+      {
+        test: /\.jsx$|\.js$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/
+      }
+    ],
+    loaders: [
+      {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
+        test: isomorphicPlugin.regular_expression('images'),
+        loader: 'url-loader?limit=10240'
+      },
+      {
+        // test: /\.(woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]*)?$/,
+        test: /\.(ttf|eot|svg|jpe?g|png|gif|ico|woff2?)$/,
+        loader: 'file'
+      }
+    ]
   },
   postcss: [autoprefixer],
   plugins: [
@@ -69,8 +91,12 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      },
-      '__CORDOVA__': false
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.js',
+      minChunks: Infinity
     })
   ]
 };

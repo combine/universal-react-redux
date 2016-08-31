@@ -1,7 +1,7 @@
 'use strict';
 
-const env = process.env.NODE_ENV || 'development';
-const webpackConfig = require(`../webpack/${env}`);
+const configFile = process.env.NODE_ENV === 'development' ? 'dev' : 'prod';
+const webpackConfig = require(`../webpack/${configFile}`);
 
 import p from '../package.json';
 
