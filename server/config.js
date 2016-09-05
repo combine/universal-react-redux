@@ -1,16 +1,17 @@
 'use strict';
 
-const configFile = process.env.NODE_ENV === 'development' ? 'dev' : 'prod';
-const webpackConfig = require(`../webpack/${configFile}`);
-
-import p from '../package.json';
+const isDev = process.env.NODE_ENV === 'development';
+const configFile = isDev ? 'development' : 'production';
+const webpackConfig = require(`../webpack/${configFile}`).default;
+const applicationPort = process.env.APPLICATION_PORT || (isDev ? 3000 : 80);
+import packageJson from '../package.json';
 
 export default {
-  name: p.name,
-  description: p.description,
-  version: p.version,
+  name: packageJson.name,
+  description: packageJson.description,
+  version: packageJson.version,
 
   // launch environment
-  port: process.env.PORT || 3000,
+  port: applicationPort,
   assetHost: process.env.ASSET_HOST || webpackConfig.output.publicPath
 };

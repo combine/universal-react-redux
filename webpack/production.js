@@ -1,7 +1,7 @@
-const webpack = require('webpack');
-const baseConfig = require('./base');
-const CompressionPlugin = require('compression-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+import webpack from 'webpack';
+import baseConfig from './base';
+import CompressionPlugin from 'compression-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const plugins = [
   new ExtractTextPlugin('[name].[hash].css'),
@@ -31,7 +31,8 @@ const loaders = [{
   exclude: /node_modules/
 }];
 
-module.exports = Object.assign({}, baseConfig, {
+export default {
+  ...baseConfig,
   output: Object.assign({}, baseConfig.output, {
     filename: '[name].[hash].js'
   }),
@@ -45,4 +46,4 @@ module.exports = Object.assign({}, baseConfig, {
       ...loaders
     ]
   })
-});
+};

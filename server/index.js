@@ -17,6 +17,6 @@ const basePath = require('path').resolve(__dirname, '..');
 const ISOTools = require('webpack-isomorphic-tools');
 
 // this global variable will be used later in express middleware
-global.ISOTools = new ISOTools(require('../webpack/iso'))
+global.ISOTools = new ISOTools(require('../webpack/isomorphic').default)
   .development(process.env.NODE_ENV === 'development')
   .server(basePath, () => require('./server'));
