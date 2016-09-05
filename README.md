@@ -1,30 +1,13 @@
-# react-redux-starter
+# universal-react-redux
 
 A universal starter kit built with ES2015, react, react-router and redux. Server
-rendering with react and express. Bundled with Webpack with hot module and css
-reloading with SCSS support.
+rendering with react and express. Bundled with Webpack, with HMR transforms and
+support for `css-modules`.
 
-## Prerequisites
-
-* Node.js 6+ is **required**, as the Webpack configuration files uses ES2015
-extensively.
-
-* Webpack
-```
-npm install -g webpack
-```
-
-* nodemon
-
-```
-npm install -g nodemon
-```
-
-* eslint, babel-eslint
-
-```
-npm install -g eslint babel-eslint
-```
+**NOTE: This repository is meant to be continually updated to use the latest in
+the react ecosystem. It is meant to be more of a guiding template for you to
+customize and build your own universal apps with React and Redux. I do not
+promise that future updates will not break your existing application.**
 
 ## Get started
 
@@ -38,7 +21,6 @@ Direct your browser to `http://localhost:3000`.
 
 ## Directory Structure
 ```
-├── README.md
 ├── client
 │   └── index.js
 ├── common
@@ -64,10 +46,9 @@ Direct your browser to `http://localhost:3000`.
 │   └── server.js
 ├── webpack
 │   ├── base.js
+│   ├── config.js
+│   ├── development.hot.js
 │   ├── development.js
-│   ├── development.server.js
-│   ├── hmr.js
-│   ├── host.js
 │   ├── isomorphic.js
 │   └── production.js
 ```
