@@ -1,6 +1,6 @@
-const baseConfig = require('./base');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const p = require('../package.json');
+import baseConfig from './base';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import packageJson from '../package.json';
 
 const plugins = [
   new ExtractTextPlugin('styles.css')
@@ -16,7 +16,7 @@ const loaders = [
     test: /\.css$/,
     loader: ExtractTextPlugin.extract(
       'style',
-      `css?minimize&modules&importLoaders=1&localIdentName=${p.config.css}` +
+      `css?minimize&modules&importLoaders=1&localIdentName=${packageJson.config.css}` +
       '!postcss'
     )
   },
@@ -24,14 +24,15 @@ const loaders = [
     test: /\.scss$/,
     loader: ExtractTextPlugin.extract(
       'style',
-      `css?minimize&modules&importLoaders=1&localIdentName=${p.config.css}` +
+      `css?minimize&modules&importLoaders=1&localIdentName=${packageJson.config.css}` +
       '!postcss' +
       '!sass'
     )
   }
 ];
 
-module.exports = Object.assign({}, baseConfig, {
+export default {
+  ...baseConfig,
   eslint: { configFile: './.eslintrc' },
   devtool: 'source-map',
   plugins: [
@@ -44,4 +45,4 @@ module.exports = Object.assign({}, baseConfig, {
       ...loaders
     ]
   })
-});
+};

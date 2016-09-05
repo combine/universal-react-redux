@@ -1,32 +1,15 @@
-const path = require('path');
-const webpack = require('webpack');
-const mapValues = require('lodash/mapValues');
-const autoprefixer = require('autoprefixer');
-const isomorphicConfig = require('./iso');
-const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
-const host = require('./host')();
+import path from 'path';
+import webpack from 'webpack';
+import mapValues from 'lodash/mapValues';
+import autoprefixer from 'autoprefixer';
+import isomorphicConfig from './isomorphic';
+import IsomorphicPlugin from 'webpack-isomorphic-tools/plugin';
+import { OUTPUT_PATH, ASSET_HOST, RESOLVE_PATHS } from './config';
 
 const isDev = process.env.NODE_ENV === 'development';
 const isomorphicPlugin = new IsomorphicPlugin(isomorphicConfig).development(isDev);
 
-const resolvePaths = {
-  actions: 'common/js/actions',
-  components: 'common/js/components',
-  containers: 'common/js/containers',
-  constants: 'common/js/constants',
-  css: 'common/css',
-  fonts: 'common/fonts',
-  images: 'common/images',
-  layouts: 'common/layouts',
-  lib: 'common/js/lib',
-  middleware: 'common/js/middleware',
-  reducers: 'common/js/reducers',
-  routes: 'common/js/routes',
-  selectors: 'common/js/selectors',
-  store: 'common/js/store'
-};
-
-module.exports = {
+export default {
   context: path.resolve(__dirname, '..'),
   entry: {
     vendor: [
@@ -34,7 +17,6 @@ module.exports = {
       'classnames',
       'history',
       'lodash',
-      'jquery',
       'react',
       'react-dom',
       'react-redux',
@@ -50,13 +32,13 @@ module.exports = {
     ]
   },
   output: {
-    path: path.join(__dirname, ('../' + host.OUTPUT_PATH)),
+    path: path.join(__dirname, ('../' + OUTPUT_PATH)),
     filename: '[name].js',
-    publicPath: host.ASSET_HOST
+    publicPath: ASSET_HOST
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.scss'],
-    alias: mapValues(resolvePaths, (str) => (
+    alias: mapValues(RESOLVE_PATHS, (str) => (
       path.join(process.cwd(), ...str.split('/'))
     ))
   },

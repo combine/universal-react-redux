@@ -1,27 +1,32 @@
 /* eslint-disable no-console */
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
-const baseConfig = require('./base');
-const host = require('./host')();
-const p = require('../package.json');
+import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL } from './config';
+import WebpackDevServer from 'webpack-dev-server';
+import webpack from 'webpack';
+import baseConfig from './base';
+import packageJson from '../package.json';
+import DashboardPlugin from 'webpack-dashboard/plugin';
 
+// Webpack Entry Point for dev server
 const entry = [
-  'webpack-dev-server/client?' + host.HOST_URL,
+  'webpack-dev-server/client?' + DEV_SERVER_HOST_URL,
   'webpack/hot/only-dev-server'
 ];
 
+// Additional plugins
 const plugins = [
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin()
+  new webpack.NoErrorsPlugin(),
+  new DashboardPlugin({ port: DEV_SERVER_PORT })
 ];
 
+// Additional loaders
 const loaders = [
   {
     test: /\.css$/,
     loaders: [
       'style',
-      `css?modules&importLoaders=3&localIdentName=${p.config.css}`,
+      `css?modules&importLoaders=3&localIdentName=${packageJson.config.css}`,
       'postcss',
     ],
   },
@@ -29,7 +34,7 @@ const loaders = [
     test: /\.scss$/,
     loaders: [
       'style',
-      `css?modules&importLoaders=3&localIdentName=${p.config.css}`,
+      `css?modules&importLoaders=3&localIdentName=${packageJson.config.css}`,
       'postcss',
       'sass'
     ]
@@ -58,7 +63,7 @@ const loaders = [
 
 const config = Object.assign({}, baseConfig, {
   eslint: { configFile: './.eslintrc' },
-  devServerPort: host.PORT,
+  devServerPort: DEV_SERVER_PORT,
   devtool: 'eval',
   entry: Object.assign({}, baseConfig.entry, {
     app: [
@@ -79,7 +84,6 @@ const config = Object.assign({}, baseConfig, {
 });
 
 console.info('Firing up Webpack dev server...');
-console.log(host);
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
@@ -95,10 +99,10 @@ new WebpackDevServer(webpack(config), {
     chunks: false,
     children: false
   }
-}).listen(host.PORT, host.HOSTNAME, function errorCallback(err) {
+}).listen(DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, function errorCallback(err) {
   if (err) {
     console.error(err);
   } else {
-    console.info('🚧 Webpack client dev-server listening on ' + host.HOST_URL + ' with publicPath:' + config.output.publicPath);
+    console.info('🚧 Webpack client dev-server listening on ' + DEV_SERVER_HOST_URL + ' with publicPath:' + config.output.publicPath);
   }
 });
