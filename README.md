@@ -11,7 +11,7 @@ promise that future updates will not break your existing application.**
 
 ## Get started
 
-If you have (yarn)[https://github.com/yarnpkg/yarn] installed (recommended):
+If you have [yarn](https://github.com/yarnpkg/yarn) installed (recommended):
 ```
 yarn install
 npm start
