@@ -14,9 +14,11 @@ require('css-modules-require-hook')({
 
 // this must be equal to the Webpack configuration's "context" parameter
 const basePath = require('path').resolve(__dirname, '..');
+
+// configure isomoprhic tools
 const ISOTools = require('webpack-isomorphic-tools');
+const isoConfig = require('../webpack/isomorphic').default;
+const server = require('./server');
 
 // this global variable will be used later in express middleware
-global.ISOTools = new ISOTools(require('../webpack/isomorphic').default)
-  .development(process.env.NODE_ENV === 'development')
-  .server(basePath, () => require('./server'));
+global.ISOTools = new ISOTools(isoConfig).server(basePath, () => server);
