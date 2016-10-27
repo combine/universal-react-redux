@@ -16,19 +16,19 @@
     "npm": "3.x.x"
   },
   "scripts": {
-    "start": "npm run dev:build && npm run dev:start",
-    "dev:start": "npm run dev:start:client & npm run dev:start:server",
-    "dev:start:server": "NODE_ENV=development $(npm bin)/nodemon server",
-    "dev:start:client": "NODE_ENV=development $(npm bin)/babel-node webpack/development.hot",
-    "dev:build": "NODE_ENV=development $(npm bin)/babel-node $(npm bin)/webpack --progress --colors --display-error-details --config webpack/development.js",
-    "prod:build": "NODE_ENV=production $(npm bin)/babel-node $(npm bin)/webpack -p --optimize-dedupe --config webpack/production.js",
+    "start": "yarn run dev:build && yarn run dev:start",
+    "dev:start": "yarn run dev:start:client & yarn run dev:start:server",
+    "dev:start:server": "NODE_ENV=development yarn run nodemon server",
+    "dev:start:client": "NODE_ENV=development yarn run babel-node webpack/development.hot",
+    "dev:build": "NODE_ENV=development $(yarn bin)/babel-node $(yarn bin)/webpack --progress --colors --display-error-details --config webpack/development.js",
+    "prod:build": "NODE_ENV=production $(yarn bin)/babel-node $(yarn bin)/webpack -p --optimize-dedupe --config webpack/production.js",
     "prod:start": "NODE_ENV=production pm2 start server --name='callai'",
-    "test": "$(npm bin)/mocha --recursive --compilers js:babel-register",
-    "test:all": "$(npm bin)/mocha --recursive --compilers js:babel-register $(find . -path ./node_modules -prune -o -name '*.test.js' -print)",
+    "test": "yarn run mocha --recursive --compilers js:babel-register",
+    "test:all": "yarn run mocha --recursive --compilers js:babel-register $(find . -path ./node_modules -prune -o -name '*.test.js' -print)",
     "test:watch": "npm test -- --watch",
-    "test:all:watch": "$(npm bin)/mocha --recursive --compilers js:babel-register $(find . -path ./node_modules -prune -o -name '*.test.js' -print) --watch",
-    "lint": "$(npm bin)/eslint --ignore-pattern **/node_modules/* --ext .js,.jsx .",
-    "postinstall": "if [ \"$NODE_ENV\" = \"production\" ]; then npm run prod:build; fi"
+    "test:all:watch": "yarn run mocha --recursive --compilers js:babel-register $(find . -path ./node_modules -prune -o -name '*.test.js' -print) --watch",
+    "lint": "yarn run eslint --ext .js,.jsx .",
+    "postinstall": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn run prod:build; fi"
   },
   "devDependencies": {
     "babel-eslint": "7.0.0",

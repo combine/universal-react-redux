@@ -11,20 +11,18 @@ promise that future updates will not break your existing application.**
 
 ## Get started
 
-If you have [yarn](https://github.com/yarnpkg/yarn) installed (recommended):
+Install (yarn)[https://github.com/yarnpkg/yarn] if you don't have it already:
 ```
-yarn install
-npm start
+npm install -g yarn
 ```
 
-Otherwise:
+Then:
 ```
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 Direct your browser to `http://localhost:3000`.
-
 
 ## Directory Structure
 ```
@@ -108,6 +106,14 @@ npm run test:all
 ```
 
 This will run all files that are suffixed with a `.test.js`.
+
+## Running ESLint
+
+```
+npm run lint
+```
+
+Check the `.eslintignore` file for directories excluded from linting.
 
 ## Changing the Asset Host
 
