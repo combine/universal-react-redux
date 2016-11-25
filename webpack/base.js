@@ -23,7 +23,6 @@ export default {
       'react-router',
       'react-router-redux',
       'redux',
-      'redux-localstorage',
       'redux-thunk',
       'reselect'
     ],
