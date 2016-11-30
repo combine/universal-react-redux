@@ -13,35 +13,36 @@ const loaders = [
     exclude: /node_modules/
   },
   {
-    test: /\.css$/,
-    loader: ExtractTextPlugin.extract(
-      'style',
-      `css?minimize&modules&importLoaders=1&localIdentName=${packageJson.config.css}` +
-      '!postcss'
-    )
-  },
-  {
-    test: /\.scss$/,
-    loader: ExtractTextPlugin.extract(
-      'style',
-      `css?minimize&modules&importLoaders=1&localIdentName=${packageJson.config.css}` +
-      '!postcss' +
-      '!sass'
-    )
+    test: /\.(css|scss)$/,
+    loader: ExtractTextPlugin.extract({
+      fallbackLoader: 'style-loader',
+      loader: [
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            minimize: false,
+            importLoaders: 1,
+            localIdentName: packageJson.config.css
+          }
+        },
+        { loader: 'postcss-loader' },
+        { loader: 'sass-loader' }
+      ]
+    })
   }
 ];
 
 export default {
   ...baseConfig,
-  eslint: { configFile: './.eslintrc' },
   devtool: 'source-map',
   plugins: [
     ...baseConfig.plugins,
     ...plugins
   ],
   module: Object.assign({}, baseConfig.module, {
-    loaders: [
-      ...baseConfig.module.loaders,
+    rules: [
+      ...baseConfig.module.rules,
       ...loaders
     ]
   })

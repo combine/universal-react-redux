@@ -22,14 +22,25 @@ const plugins = [
   })
 ];
 
-const loaders = [{
-  test: /\.scss$/,
-  loader: ExtractTextPlugin.extract('css!sass')
-}, {
-  test: /\.js$/,
-  loaders: ['babel'],
-  exclude: /node_modules/
-}];
+const loaders = [
+  {
+    test: /\.scss$/,
+    loader: ExtractTextPlugin.extract({
+      fallbackLoader: 'style-loader',
+      loader: [
+        { loader: 'css-loader' },
+        { loader: 'postcss-loader' },
+        { loader: 'sass-loader' }
+      ]
+    })
+  },
+  {
+    test: /\.js$/,
+    loader: 'babel-loader',
+    rules: ['babel'],
+    exclude: /node_modules/
+  }
+];
 
 export default {
   ...baseConfig,
@@ -41,8 +52,8 @@ export default {
     ...plugins
   ],
   module: Object.assign({}, baseConfig.module, {
-    loaders: [
-      ...baseConfig.module.loaders,
+    rules: [
+      ...baseConfig.module.rules,
       ...loaders
     ]
   })

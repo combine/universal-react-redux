@@ -99,6 +99,6 @@ app.listen(port, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`🌎 Application server listening on port ${port}.`);
+    console.info(`Application server mounted locally on port ${port}.`);
   }
 });

@@ -42,7 +42,7 @@
     "redux-devtools": "3.3.1",
     "redux-devtools-dock-monitor": "1.1.1",
     "redux-devtools-log-monitor": "1.1.1",
-    "webpack-dev-server": "1.16.2",
+    "webpack-dev-server": "2.1.0-beta.11",
     "webpack-sources": "0.1.2"
   },
   "dependencies": {
@@ -71,7 +71,7 @@
     "css-modules-require-hook": "4.0.5",
     "expose-loader": "0.7.1",
     "express": "4.14.0",
-    "extract-text-webpack-plugin": "1.0.1",
+    "extract-text-webpack-plugin": "2.0.0-beta.4",
     "file-loader": "0.9.0",
     "font-awesome": "4.7.0",
     "history": "4.4.0",
@@ -95,7 +95,7 @@
     "serve-static": "1.11.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "1.13.3",
+    "webpack": "2.1.0-beta.27",
     "webpack-isomorphic-tools": "2.6.4"
   }
 }

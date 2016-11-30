@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL } from './config';
+import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL } from './constants';
 import WebpackDevServer from 'webpack-dev-server';
 import webpack from 'webpack';
 import baseConfig from './base';
@@ -13,33 +13,47 @@ const entry = [
 
 // Additional plugins
 const plugins = [
-  new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin()
+  new webpack.NoErrorsPlugin(),
+  new webpack.NamedModulesPlugin()
 ];
 
 // Additional loaders
 const loaders = [
   {
     test: /\.css$/,
-    loaders: [
-      'style',
-      `css?modules&importLoaders=3&localIdentName=${packageJson.config.css}`,
-      'postcss',
-    ],
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          modules: true,
+          importLoaders: 3,
+          localIdentName: packageJson.config.css
+        }
+      },
+      'postcss-loader'
+    ]
   },
   {
     test: /\.scss$/,
-    loaders: [
-      'style',
-      `css?modules&importLoaders=3&localIdentName=${packageJson.config.css}`,
-      'postcss',
-      'sass'
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          modules: true,
+          importLoaders: 3,
+          localIdentName: packageJson.config.css
+        }
+      },
+      'postcss-loader',
+      'sass-loader'
     ]
   },
   {
     test: /\.jsx$|\.js$/,
-    loader: 'babel',
+    loader: 'babel-loader',
     exclude: /node_modules/,
     // use react-transform to hot reload modules when hot is specified
     query: {
@@ -60,8 +74,6 @@ const loaders = [
 ];
 
 const config = Object.assign({}, baseConfig, {
-  eslint: { configFile: './.eslintrc' },
-  devServerPort: DEV_SERVER_PORT,
   devtool: 'eval',
   entry: Object.assign({}, baseConfig.entry, {
     app: [
@@ -74,8 +86,8 @@ const config = Object.assign({}, baseConfig, {
     ...plugins
   ],
   module: Object.assign({}, baseConfig.module, {
-    loaders: [
-      ...baseConfig.module.loaders,
+    rules: [
+      ...baseConfig.module.rules,
       ...loaders
     ]
   })
@@ -84,6 +96,7 @@ const config = Object.assign({}, baseConfig, {
 console.info('Firing up Webpack dev server...');
 
 new WebpackDevServer(webpack(config), {
+  port: DEV_SERVER_PORT,
   publicPath: config.output.publicPath,
   hot: true,
   historyApiFallback: true,
@@ -101,6 +114,6 @@ new WebpackDevServer(webpack(config), {
   if (err) {
     console.error(err);
   } else {
-    console.info('🚧 Webpack client dev-server listening on ' + DEV_SERVER_HOST_URL + ' with publicPath:' + config.output.publicPath);
+    console.info(`Webpack dev server mounted at ${DEV_SERVER_HOST_URL}. Asset path: ${config.output.publicPath}`);
   }
 });
