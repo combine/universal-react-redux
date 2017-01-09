@@ -34,48 +34,69 @@
     "dev:start": "yarn run dev:start:client & yarn run dev:start:server",
     "dev:start:server": {
       "command": "yarn run nodemon server",
-      "env": { "NODE_ENV": "development" }
+      "env": {
+        "NODE_ENV": "development"
+      }
     },
     "dev:start:client": {
-      "command": "yarn run babel-node webpack/development.hot",
-      "env": { "NODE_ENV": "development" }
+      "command": "yarn run babel-node -- webpack/development.hot",
+      "env": {
+        "NODE_ENV": "development"
+      }
     },
     "dev:build": {
-      "command": "$(yarn bin)/babel-node $(yarn bin)/webpack --progress --colors --display-error-details --config webpack/development.js",
-      "env": { "NODE_ENV": "development" }
+      "command": "yarn run babel-node -- ./script/build webpack/development.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
     },
     "prod:build": {
-      "command": "$(yarn bin)/babel-node $(yarn bin)/webpack -p --optimize-dedupe --config webpack/production.js",
-      "env": { "NODE_ENV": "production" }
+      "command": "yarn run babel-node -- ./script/build webpack/production.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
     },
     "prod:start": {
       "command": "pm2 start server --name='universal-react-redux'",
-      "env": { "NODE_ENV": "production" }
+      "env": {
+        "NODE_ENV": "production"
+      }
     },
     "test": {
       "command": "yarn run mocha --recursive --compilers js:babel-register",
-      "env": { "NODE_ENV": "test" }
+      "env": {
+        "NODE_ENV": "test"
+      }
     },
     "test:all": {
       "command": "yarn run mocha --recursive --compilers js:babel-register $(find . -path ./node_modules -prune -o -name '*.test.js' -print)",
-      "env": { "NODE_ENV": "test" }
+      "env": {
+        "NODE_ENV": "test"
+      }
     },
     "test:watch": {
       "command": "yarn run test -- --watch",
-      "env": { "NODE_ENV": "test" }
+      "env": {
+        "NODE_ENV": "test"
+      }
     },
     "test:all:watch": {
       "command": "yarn run test:all -- --watch",
-      "env": { "NODE_ENV": "test" }
+      "env": {
+        "NODE_ENV": "test"
+      }
     },
     "lint": {
       "command": "yarn run eslint --ext .js,.jsx .",
-      "env": { "NODE_ENV": "test" }
+      "env": {
+        "NODE_ENV": "test"
+      }
     }
   },
   "devDependencies": {
     "babel-eslint": "7.1.1",
     "better-npm-run": "^0.0.13",
+    "debug": "^2.6.0",
     "eslint": "3.11.1",
     "eslint-loader": "1.6.1",
     "eslint-plugin-react": "6.7.1",
@@ -139,7 +160,7 @@
     "serve-static": "1.11.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "2.1.0-beta.27",
+    "webpack": "2.1.0-beta.28",
     "webpack-isomorphic-tools": "2.6.4"
   }
 }
