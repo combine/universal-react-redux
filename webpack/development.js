@@ -40,10 +40,10 @@ export default {
     ...baseConfig.plugins,
     ...plugins
   ],
-  module: Object.assign({}, baseConfig.module, {
+  module: { ...baseConfig.module, ...{
     rules: [
       ...baseConfig.module.rules,
       ...loaders
     ]
-  })
+  }}
 };

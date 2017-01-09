@@ -35,26 +35,25 @@ const loaders = [
     })
   },
   {
-    test: /\.js$/,
+    test: /\.jsx$|\.js$/,
     loader: 'babel-loader',
-    rules: ['babel'],
     exclude: /node_modules/
   }
 ];
 
 export default {
   ...baseConfig,
-  output: Object.assign({}, baseConfig.output, {
+  output: { ...baseConfig.output, ...{
     filename: '[name].[hash].js'
-  }),
+  }},
   plugins: [
     ...baseConfig.plugins,
     ...plugins
   ],
-  module: Object.assign({}, baseConfig.module, {
+  module: { ...baseConfig.module, ...{
     rules: [
       ...baseConfig.module.rules,
       ...loaders
     ]
-  })
+  }}
 };
