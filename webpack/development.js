@@ -15,8 +15,8 @@ const loaders = [
   {
     test: /\.(css|scss)$/,
     loader: ExtractTextPlugin.extract({
-      fallbackLoader: 'style-loader',
-      loader: [
+      fallback: 'style-loader',
+      use: [
         {
           loader: 'css-loader',
           options: {

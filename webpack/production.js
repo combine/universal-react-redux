@@ -26,8 +26,8 @@ const loaders = [
   {
     test: /\.scss$/,
     loader: ExtractTextPlugin.extract({
-      fallbackLoader: 'style-loader',
-      loader: [
+      fallbac: 'style-loader',
+      use: [
         { loader: 'css-loader' },
         { loader: 'postcss-loader' },
         { loader: 'sass-loader' }
