@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL } from './constants';
 import WebpackDevServer from 'webpack-dev-server';
+import path from 'path';
 import webpack from 'webpack';
 import baseConfig from './base';
 import packageJson from '../package.json';
 
 // Webpack Entry Point for dev server
 const entry = [
+  'react-hot-loader/patch',
   'webpack-dev-server/client?' + DEV_SERVER_HOST_URL,
   'webpack/hot/only-dev-server'
 ];
@@ -14,7 +16,7 @@ const entry = [
 // Additional plugins
 const plugins = [
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin(),
+  new webpack.NoEmitOnErrorsPlugin(),
   new webpack.NamedModulesPlugin()
 ];
 
@@ -50,26 +52,6 @@ const loaders = [
       'postcss-loader',
       'sass-loader'
     ]
-  },
-  {
-    test: /\.jsx$|\.js$/,
-    loader: 'babel-loader',
-    exclude: /node_modules/,
-    // use react-transform to hot reload modules when hot is specified
-    query: {
-      plugins: [
-        ['react-transform', {
-          transforms: [{
-            transform: 'react-transform-hmr',
-            imports: ['react'],
-            locals: ['module']
-          }, {
-            transform: 'react-transform-catch-errors',
-            imports: ['react', 'redbox-react']
-          }]
-        }]
-      ]
-    }
   }
 ];
 

@@ -1,7 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
 import mapValues from 'lodash/mapValues';
-import autoprefixer from 'autoprefixer';
 import isomorphicConfig from './isomorphic';
 import IsomorphicPlugin from 'webpack-isomorphic-tools/plugin';
 import { OUTPUT_PATH, ASSET_HOST, RESOLVE_PATHS } from './constants';
@@ -48,12 +47,13 @@ export default {
         test: /\.jsx$|\.js$/,
         exclude: /node_modules/,
         use: [
+          'babel-loader',
           {
             loader: 'eslint-loader',
             options: {
               configFile: './.eslintrc',
             }
-          }
+          },
         ]
       },
       {

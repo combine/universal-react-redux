@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { AppContainer } from 'react-hot-loader';
 import configureStore from 'store';
 import routes from 'routes';
 
@@ -23,10 +24,22 @@ const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(browserHistory, store);
 
-// Render the app!
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history} routes={routes} />
-  </Provider>,
-  rootElement
-);
+const render = (routes) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <AppContainer>
+        <Router history={history} routes={routes} />
+      </AppContainer>
+    </Provider>,
+    rootElement
+  );
+};
+
+render(routes);
+
+if (module.hot) {
+  module.hot.accept('../common/js/routes', () => {
+    const newRoutes = require('../common/js/routes').default;
+    render(newRoutes);
+  });
+}
