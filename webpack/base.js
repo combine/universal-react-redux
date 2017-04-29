@@ -21,9 +21,7 @@ export default {
       'react-redux',
       'react-router',
       'react-router-redux',
-      'redux',
-      'redux-thunk',
-      'reselect'
+      'redux'
     ],
     app: [
       './client/index'
