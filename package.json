@@ -153,6 +153,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "next",
     "redux": "^3.6.0",
+    "redux-logger": "^3.0.1",
     "resolve-url-loader": "^2.0.2",
     "sass-loader": "^6.0.3",
     "serve-static": "^1.12.1",

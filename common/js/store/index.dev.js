@@ -1,12 +1,15 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import rootReducer from 'reducers';
 import DevTools from 'containers/DevTools';
+import { createLogger } from 'redux-logger';
 
 export default function configureStore(initialState) {
   /* Middleware
    * Configure this array with the middleware that you want included
    */
-  let middleware = [];
+  let middleware = [
+    createLogger()
+  ];
 
   // Add universal enhancers here
   let enhancers = [
