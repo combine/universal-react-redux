@@ -26,9 +26,8 @@ Direct your browser to `http://localhost:3000`.
 
 ## Directory Structure
 ```
-├── client
-│   └── index.js
-├── common
+├── client                         # Client-side code
+├── common                         # Shared code between client and server
 │   ├── css
 │   ├── fonts
 │   ├── images
@@ -40,22 +39,10 @@ Direct your browser to `http://localhost:3000`.
 │   │   ├── middleware            # Middleware for redux
 │   │   ├── reducers              # Redux reducers
 │   │   ├── routes                # Routes each have an index.js which exports a react-router Route.
-│   │   ├── selectors             # Selectors for getting state data
 │   │   └── store                 # Store configuration for production and dev.
 │   └── layouts                   # Layout files to be rendered by the server.
-├── nodemon.json
-├── package.json
-├── server
-│   ├── config.js
-│   ├── index.js
-│   └── server.js
-├── webpack
-│   ├── base.js
-│   ├── config.js
-│   ├── development.hot.js
-│   ├── development.js
-│   ├── isomorphic.js
-│   └── production.js
+├── server                        # Server-side code
+├── webpack                       # Webpack configuration files
 ```
 
 ## CSS Modules
