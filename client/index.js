@@ -2,12 +2,12 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import { browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { BrowserRouter } from 'react-router-dom';
+// import { browserHistory } from 'react-router';
+// import { syncHistoryWithStore } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
 import configureStore from 'store';
-import routes from 'routes';
+import App from 'containers/App';
 
 /* Images
  * This space is reserved for images that are required by server rendering,
@@ -22,24 +22,26 @@ const rootElement = document.getElementById('app');
 // rendering.
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState);
-const history = syncHistoryWithStore(browserHistory, store);
+// const history = syncHistoryWithStore(browserHistory, store);
 
-const render = (routes) => {
+const render = (Component) => {
   ReactDOM.render(
     <Provider store={store}>
       <AppContainer>
-        <Router history={history} routes={routes} />
+        <BrowserRouter>
+          <Component />
+        </BrowserRouter>
       </AppContainer>
     </Provider>,
     rootElement
   );
 };
 
-render(routes);
+render(App);
 
 if (module.hot) {
-  module.hot.accept('../common/js/routes', () => {
-    const newRoutes = require('../common/js/routes').default;
-    render(newRoutes);
+  // We need to re-require the main App module.
+  module.hot.accept('../common/js/containers/App', () => {
+    render(require('../common/js/containers/App').default);
   });
 }
