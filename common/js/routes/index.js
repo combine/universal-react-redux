@@ -1,7 +1,7 @@
 'use strict';
 
 import Home from 'containers/Home';
-import Example from 'containers/Example';
+import Todos from 'containers/Todos';
 
 export default [
   {
@@ -10,8 +10,8 @@ export default [
     component: Home
   },
   {
-    path: '/example/:id?',
-    exact: false,
-    component: Example
+    path: '/todos',
+    exact: true,
+    component: Todos
   }
 ];
