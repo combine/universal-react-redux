@@ -2,12 +2,13 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-// import { browserHistory } from 'react-router';
-// import { syncHistoryWithStore } from 'react-router-redux';
+import { ConnectedRouter } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
+import createHistory from 'history/createBrowserHistory';
 import configureStore from 'store';
 import App from 'containers/App';
+
+const history = createHistory();
 
 /* Images
  * This space is reserved for images that are required by server rendering,
@@ -21,16 +22,15 @@ const rootElement = document.getElementById('app');
 // Creates the Redux store based on the initial state passed down by the server
 // rendering.
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore(initialState);
-// const history = syncHistoryWithStore(browserHistory, store);
+const store = configureStore(initialState, history);
 
 const render = (Component) => {
   ReactDOM.render(
     <Provider store={store}>
       <AppContainer>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
           <Component />
-        </BrowserRouter>
+        </ConnectedRouter>
       </AppContainer>
     </Provider>,
     rootElement
