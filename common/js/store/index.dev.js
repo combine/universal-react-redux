@@ -1,15 +1,20 @@
 import { compose, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 import rootReducer from 'reducers';
 import DevTools from 'containers/DevTools';
+import { createLogger } from 'redux-logger';
+import { routerMiddleware } from 'react-router-redux';
 
-export default function configureStore(initialState) {
+export default function configureStore(initialState, history = null) {
   /* Middleware
-   * Configure this array with the middleware that you want included. thunk
-   * is included by default, and react-router-redux's syncHistory is also
-   * applied if an `options.history` object was passed to configureStore.
+   * Configure this array with the middleware that you want included
    */
-  let middleware = [thunk];
+  let middleware = [
+    createLogger()
+  ];
+
+  if (history) {
+    middleware.push(routerMiddleware(history));
+  }
 
   // Add universal enhancers here
   let enhancers = [

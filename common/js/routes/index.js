@@ -1,18 +1,17 @@
 'use strict';
 
-import App from 'containers/App';
-import HomeRoute from './home';
-import ExampleRoute from './example';
+import Home from 'containers/Home';
+import Todos from 'containers/Todos';
 
-const Routes = [
+export default [
   {
     path: '/',
-    component: App,
-    indexRoute: HomeRoute,
-    childRoutes: [
-      ExampleRoute
-    ]
+    exact: true,
+    component: Home
+  },
+  {
+    path: '/todos',
+    exact: true,
+    component: Todos
   }
 ];
-
-export default Routes;

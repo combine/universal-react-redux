@@ -1,27 +1,19 @@
 import path from 'path';
 import Express from 'express';
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
-import { RouterContext, match } from 'react-router';
+import { StaticRouter, matchPath } from 'react-router';
+import render from './render';
 import routes from 'routes';
+import ErrorPage from 'components/ErrorPage';
 import config from './config';
 import configureStore from 'store';
 import serveStatic from 'serve-static';
-import fs from 'fs';
 import compression from 'compression';
-import template from 'lodash/template';
-
-// Tell node.js to load html files as a string
-require.extensions['.html'] = (module, filename) => {
-  module.exports = fs.readFileSync(filename, 'utf8');
-};
+import App from 'containers/App';
 
 const app = new Express();
 const port = config.port;
-
-// cache the main layout template with lodash
-const compiledTemplate = template(require('../common/layouts/server.html'));
 
 // gzip
 app.use(compression());
@@ -33,10 +25,9 @@ app.use('/dist', serveStatic(path.join(__dirname, '../dist')));
 app.use(handleRender);
 
 function handleRender(req, res) {
-  // Compile an initial state
   // This can come from the server somewhere if you want to pre-populate the
   // app's initial state.
-  const initialState = { };
+  const initialState = {};
 
   // Create a new Redux store instance
   const store = configureStore(initialState);
@@ -45,54 +36,28 @@ function handleRender(req, res) {
   const finalState = store.getState();
 
   // See react-router's Server Rendering section:
-  // https://github.com/rackt/react-router/blob/master/docs/guides/advanced/ServerRendering.md
-  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-    if (redirectLocation) {
-      res.redirect(301, redirectLocation.pathname + redirectLocation.search);
-    } else if (error) {
-      res.status(500).send(error.message);
-    } else if (renderProps == null) {
-      res.status(404).send('Not found');
-    } else {
-
-      // for isomorphic requires. see index.js
-      // clear require() cache if in development mode
-      // (makes asset hot reloading work)
-      if (process.env.NODE_ENV == 'development') {
-        global.ISOTools.refresh();
-      }
-
-      renderProps.assets = global.ISOTools.assets();
-
-      // Render the component to a string with the RouterContext
-      let html = ReactDOMServer.renderToString(
-        <Provider store={store}>
-          <RouterContext {...renderProps} />
-        </Provider>
-      );
-      // Send the rendered page back to the client
-      res.send(renderFullPage(html, finalState, renderProps));
-    }
+  // https://reacttraining.com/react-router/web/guides/server-rendering
+  const match = routes.reduce((acc, route) => {
+    const { path, exact } = route;
+    return matchPath(req.url, path, { exact }) || acc || null;
   });
-}
 
-function renderFullPage(html, initialState, renderProps) {
-  let assets = renderProps.assets.assets;
-  let assetHost = config.assetHost;
-  let title = config.name;
-  let favicon = assets['./common/images/favicon.png'];
-  let stylesheet = assetHost + 'styles.css';
-  let vendorJs = assetHost + 'vendor.js';
-  let appJs = assetHost + 'app.js';
-  return compiledTemplate({
-    html,
-    title,
-    favicon,
-    stylesheet,
-    vendorJs,
-    appJs,
-    initialState
-  });
+  // No matched route, render a 404 page.
+  if (!match) {
+    res.status(404).send(render(<ErrorPage code={404} />, finalState));
+    return;
+  }
+
+  // Otherwise, there is a match, so render the provider and router context
+  const component = (
+    <Provider store={store}>
+      <StaticRouter context={{}} location={req.url}>
+        <App />
+      </StaticRouter>
+    </Provider>
+  );
+
+  res.status(200).send(render(component, finalState));
 }
 
 app.listen(port, (error) => {

@@ -1,12 +1,12 @@
 import path from 'path';
 import webpack from 'webpack';
 import mapValues from 'lodash/mapValues';
-import autoprefixer from 'autoprefixer';
 import isomorphicConfig from './isomorphic';
 import IsomorphicPlugin from 'webpack-isomorphic-tools/plugin';
 import { OUTPUT_PATH, ASSET_HOST, RESOLVE_PATHS } from './constants';
 
 const isDev = process.env.NODE_ENV === 'development';
+const isProd = process.env.NODE_ENV === 'production';
 const isomorphicPlugin = new IsomorphicPlugin(isomorphicConfig).development(isDev);
 
 export default {
@@ -22,9 +22,7 @@ export default {
       'react-redux',
       'react-router',
       'react-router-redux',
-      'redux',
-      'redux-thunk',
-      'reselect'
+      'redux'
     ],
     app: [
       './client/index'
@@ -48,12 +46,13 @@ export default {
         test: /\.jsx$|\.js$/,
         exclude: /node_modules/,
         use: [
+          'babel-loader',
           {
             loader: 'eslint-loader',
             options: {
               configFile: './.eslintrc',
             }
-          }
+          },
         ]
       },
       {
@@ -80,7 +79,7 @@ export default {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: 'vendor.js',
+      filename: `vendor${isProd ? '.[hash]' : ''}.js`,
       minChunks: Infinity
     })
   ]

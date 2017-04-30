@@ -1,0 +1,44 @@
+.todos {
+  width: 300px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .todo {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .todo .completeInput {
+    flex: 0;
+    width: 25px;
+  }
+  .todo .text {
+    flex: 1;
+    padding-left: 10px;
+
+    &.completed {
+      text-decoration: line-through;
+      color: #ccc;
+    }
+  }
+  .todo .delete {
+    flex: 0;
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline
+  }
+}
+
+.todoForm {
+  width: 300px;
+  margin: 10px 0 0;
+  display: flex;
+
+  input, button {
+    padding: 5px 3px;
+  }
+
+  input { flex: 1; }
+}
