@@ -10,21 +10,22 @@ require.extensions['.html'] = (module, filename) => {
 };
 
 const compile = template(require('../common/layouts/server.html'));
+const env = process.env.NODE_ENV || 'development';
 
 export default function render(component, initialState) {
-  // TODO: Replace this.
-  if (process.env.NODE_ENV == 'development') {
+  if (env === 'development') {
     global.ISOTools.refresh();
   }
 
-  const assets = global.ISOTools.assets().assets;
-  const assetHost = config.assetHost;
+  const assets = global.ISOTools.assets();
   const title = config.name;
-  const favicon = assets['./common/images/favicon.png'];
-  const stylesheet = assetHost + 'styles.css';
-  const vendorJs = assetHost + 'vendor.js';
-  const appJs = assetHost + 'app.js';
+  const favicon = assets.assets['./common/images/favicon.png'];
+  const vendorJs = assets.javascript.vendor;
+  const appJs = assets.javascript.app;
   const html = renderToString(component);
+  const stylesheet = env === 'development'
+    ? config.assetHost + 'styles.css'
+    : assets.styles.app;
 
   return compile({ html, title, favicon, stylesheet, vendorJs, appJs, initialState });
 }
