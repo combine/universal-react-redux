@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import baseConfig from './base';
+import { CSS_MODULES_IDENTIFIER } from './constants';
 import CompressionPlugin from 'compression-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
@@ -28,7 +29,15 @@ const loaders = [
     loader: ExtractTextPlugin.extract({
       fallback: 'style-loader',
       use: [
-        { loader: 'css-loader' },
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            minimize: false,
+            importLoaders: 1,
+            localIdentName: CSS_MODULES_IDENTIFIER
+          }
+        },
         { loader: 'postcss-loader' },
         { loader: 'sass-loader' }
       ]

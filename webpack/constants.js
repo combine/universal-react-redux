@@ -17,7 +17,15 @@ export const OUTPUT_PATH = process.env.OUTPUT_PATH || 'dist/';
 /* The asset host to use inside the built webpack files. In product, set the
  * ASSET_HOST environment variable.
  */
-export const ASSET_HOST = process.env.ASSET_HOST || (DEV_SERVER_HOST_URL + '/' + OUTPUT_PATH);
+export const ASSET_HOST = (
+  process.env.NODE_ENV === 'production'
+    ? process.env.ASSET_HOST || '/dist/'
+    : process.env.ASSET_HOST || (DEV_SERVER_HOST_URL + '/' + OUTPUT_PATH)
+  );
+
+/* The identifier to use for css-modules.
+ */
+export const CSS_MODULES_IDENTIFIER = '[name]__[local]__[hash:base64:5]';
 
 /* Paths for webpack to resolve into non-relative directories, so that instead
  * of having to use relative paths:

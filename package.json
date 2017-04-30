@@ -4,9 +4,6 @@
   "version": "2.3.0",
   "license": "MIT",
   "main": "client/index.js",
-  "config": {
-    "css": "[name]__[local]__[hash:base64:5]"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/combine/universal-react-redux.git"

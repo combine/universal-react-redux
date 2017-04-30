@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL } from './constants';
+import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL, CSS_MODULES_IDENTIFIER } from './constants';
 import WebpackDevServer from 'webpack-dev-server';
 import path from 'path';
 import webpack from 'webpack';
@@ -31,7 +31,7 @@ const loaders = [
         options: {
           modules: true,
           importLoaders: 3,
-          localIdentName: packageJson.config.css
+          localIdentName: CSS_MODULES_IDENTIFIER
         }
       },
       'postcss-loader'
@@ -46,7 +46,7 @@ const loaders = [
         options: {
           modules: true,
           importLoaders: 3,
-          localIdentName: packageJson.config.css
+          localIdentName: CSS_MODULES_IDENTIFIER
         }
       },
       'postcss-loader',

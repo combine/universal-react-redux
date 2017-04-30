@@ -1,6 +1,6 @@
 import baseConfig from './base';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import packageJson from '../package.json';
+import { CSS_MODULES_IDENTIFIER } from './constants';
 
 const plugins = [
   new ExtractTextPlugin('styles.css')
@@ -23,7 +23,7 @@ const loaders = [
             modules: true,
             minimize: false,
             importLoaders: 1,
-            localIdentName: packageJson.config.css
+            localIdentName: CSS_MODULES_IDENTIFIER
           }
         },
         { loader: 'postcss-loader' },

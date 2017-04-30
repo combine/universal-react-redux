@@ -8,7 +8,7 @@ require('app-module-path').addPath('common/js');
 // css-modules-require-hook package allows us to require css files on the server.
 require('css-modules-require-hook')({
   extensions: ['.scss'],
-  generateScopedName: require('../package.json').config.css,
+  generateScopedName: require('../webpack/constants').CSS_MODULES_IDENTIFIER,
   devMode: process.env.NODE_ENV === 'development'
 });
 
