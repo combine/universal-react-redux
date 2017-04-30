@@ -6,6 +6,7 @@ import IsomorphicPlugin from 'webpack-isomorphic-tools/plugin';
 import { OUTPUT_PATH, ASSET_HOST, RESOLVE_PATHS } from './constants';
 
 const isDev = process.env.NODE_ENV === 'development';
+const isProd = process.env.NODE_ENV === 'production';
 const isomorphicPlugin = new IsomorphicPlugin(isomorphicConfig).development(isDev);
 
 export default {
@@ -78,7 +79,7 @@ export default {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: 'vendor.js',
+      filename: `vendor${isProd ? '.[hash]' : ''}.js`,
       minChunks: Infinity
     })
   ]
