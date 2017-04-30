@@ -24,6 +24,12 @@ yarn start
 
 Direct your browser to `http://localhost:3000`.
 
+For production builds:
+
+```
+yarn run prod:start
+```
+
 ## Directory Structure
 ```
 ├── client                         # Client-side code

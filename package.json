@@ -19,7 +19,7 @@
     "dev:start:client": "better-npm-run dev:start:client",
     "dev:build": "better-npm-run dev:build",
     "prod:build": "better-npm-run prod:build",
-    "prod:start": "better-npm-run prod:start ",
+    "prod:start": "better-npm-run prod:build && better-npm-run prod:start ",
     "test": "better-npm-run test",
     "test:all": "better-npm-run test:all",
     "test:watch": "better-npm-run test:watch",
