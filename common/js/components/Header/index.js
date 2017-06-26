@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import css from './Header.scss';
+import { NavLink } from 'react-router-dom';
+import { Header, Menu } from 'semantic-ui-react';
 
-export default class Header extends Component {
+const menuItems = [
+  { name: 'Home', to: '/', exact: true },
+  { name: 'Todos', to: '/todos' }
+];
+
+class HeaderView extends Component {
   render() {
     return (
-      <header>
-        <ul className={css.headerLinks}>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/todos">Todos</Link></li>
-        </ul>
-      </header>
+      <Header>
+        <Menu size="massive">
+          {menuItems.map(item => (
+            <Menu.Item {...item} as={NavLink} key={item.name}>
+              {item.name}
+            </Menu.Item>
+          ))}
+        </Menu>
+      </Header>
     );
   }
 }
+
+export default HeaderView;
