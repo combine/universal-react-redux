@@ -1,7 +1,7 @@
 {
   "name": "universal-react-redux",
   "description": "A universal starter kit built with ES2015, react, react-router and redux. Server rendering with react and express. Bundled with Webpack with HMR transforms and css-modules support.",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "license": "MIT",
   "main": "client/index.js",
   "repository": {
@@ -9,7 +9,7 @@
     "url": "https://github.com/combine/universal-react-redux.git"
   },
   "engines": {
-    "node": "7.x.x",
+    "node": "8.x.x",
     "npm": "3.x.x"
   },
   "scripts": {
