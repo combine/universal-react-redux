@@ -1,13 +1,19 @@
 import webpack from 'webpack';
 import baseConfig from './base';
-import { CSS_MODULES_IDENTIFIER } from './constants';
+import { SCSS_LOADERS } from './constants';
 import CompressionPlugin from 'compression-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const plugins = [
   new ExtractTextPlugin('[name].[hash].css'),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    filename: '[name].[hash].js',
+    minChunks: module => /node_modules/.test(module.resource)
+  }),
   new webpack.optimize.DedupePlugin(),
   new webpack.optimize.AggressiveMergingPlugin(),
+  new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.optimize.UglifyJsPlugin({
     compress: {
       screw_ie8: true,
@@ -25,28 +31,25 @@ const plugins = [
 
 const loaders = [
   {
-    test: /\.scss$/,
+    test: /\.css$/,
     loader: ExtractTextPlugin.extract({
       fallback: 'style-loader',
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            minimize: false,
-            importLoaders: 1,
-            localIdentName: CSS_MODULES_IDENTIFIER
-          }
-        },
-        { loader: 'postcss-loader' },
-        { loader: 'sass-loader' }
-      ]
+      use: [ 'css-loader' ]
     })
+  },
+  {
+    test: /\.scss$/,
+    loader: ExtractTextPlugin.extract(SCSS_LOADERS)
   },
   {
     test: /\.jsx$|\.js$/,
     loader: 'babel-loader',
-    exclude: /node_modules/
+    exclude: /node_modules/,
+    options: {
+      presets: [
+        [ 'es2015', { modules: false } ]
+      ]
+    }
   }
 ];
 

@@ -1,10 +1,8 @@
 /* eslint-disable no-console */
-import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL, CSS_MODULES_IDENTIFIER } from './constants';
+import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL, SCSS_LOADERS } from './constants';
 import WebpackDevServer from 'webpack-dev-server';
-import path from 'path';
 import webpack from 'webpack';
 import baseConfig from './base';
-import packageJson from '../package.json';
 
 // Webpack Entry Point for dev server
 const entry = [
@@ -15,6 +13,11 @@ const entry = [
 
 // Additional plugins
 const plugins = [
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    filename: '[name].js',
+    minChunks: module => /node_modules/.test(module.resource)
+  }),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
   new webpack.NamedModulesPlugin()
@@ -24,33 +27,13 @@ const plugins = [
 const loaders = [
   {
     test: /\.css$/,
-    use: [
-      'style-loader',
-      {
-        loader: 'css-loader',
-        options: {
-          modules: true,
-          importLoaders: 3,
-          localIdentName: CSS_MODULES_IDENTIFIER
-        }
-      },
-      'postcss-loader'
-    ]
+    use: [ 'style-loader', 'css-loader' ]
   },
   {
     test: /\.scss$/,
     use: [
       'style-loader',
-      {
-        loader: 'css-loader',
-        options: {
-          modules: true,
-          importLoaders: 3,
-          localIdentName: CSS_MODULES_IDENTIFIER
-        }
-      },
-      'postcss-loader',
-      'sass-loader'
+      ...SCSS_LOADERS.use
     ]
   }
 ];
@@ -64,7 +47,8 @@ const config = Object.assign({}, baseConfig, {
     ]
   }),
   plugins: [
-    ...baseConfig.plugins,
+    // don't use the first plugin (isomorphic plugin)
+    ...baseConfig.plugins.slice(1),
     ...plugins
   ],
   module: Object.assign({}, baseConfig.module, {

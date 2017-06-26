@@ -1,37 +1,47 @@
+require('dotenv-safe').load();
+
 import path from 'path';
 import webpack from 'webpack';
 import mapValues from 'lodash/mapValues';
 import isomorphicConfig from './isomorphic';
 import IsomorphicPlugin from 'webpack-isomorphic-tools/plugin';
-import { OUTPUT_PATH, ASSET_HOST, RESOLVE_PATHS } from './constants';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import Dotenv from 'dotenv-webpack';
+import {
+  ANALYZE, NODE_ENV, WEBPACK_OUTPUT_PATH, ASSET_URL, RESOLVE_PATHS
+} from './constants';
 
-const isDev = process.env.NODE_ENV === 'development';
-const isProd = process.env.NODE_ENV === 'production';
+const isDev = NODE_ENV === 'development';
 const isomorphicPlugin = new IsomorphicPlugin(isomorphicConfig).development(isDev);
+
+const plugins = [
+  isomorphicPlugin,
+  new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|es/),
+  new Dotenv({ safe: true }),
+  new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': JSON.stringify(NODE_ENV)
+    }
+  })
+];
+
+if (ANALYZE) { plugins.push(new BundleAnalyzerPlugin()); }
 
 export default {
   context: path.resolve(__dirname, '..'),
   entry: {
     vendor: [
-      'babel-polyfill',
-      'classnames',
-      'history',
-      'lodash',
-      'react',
-      'react-dom',
-      'react-redux',
-      'react-router',
-      'react-router-redux',
-      'redux'
+      // Vendor CSS
+      './client/vendor'
     ],
     app: [
       './client/index'
     ]
   },
   output: {
-    path: path.join(__dirname, ('../' + OUTPUT_PATH)),
+    path: path.join(__dirname, ('../' + WEBPACK_OUTPUT_PATH)),
     filename: '[name].js',
-    publicPath: ASSET_HOST
+    publicPath: `${ASSET_URL}/`
   },
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
@@ -69,18 +79,5 @@ export default {
       }
     ]
   },
-  plugins: [
-    isomorphicPlugin,
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en|es/),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: `vendor${isProd ? '.[hash]' : ''}.js`,
-      minChunks: Infinity
-    })
-  ]
+  plugins
 };

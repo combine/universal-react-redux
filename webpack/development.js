@@ -1,40 +1,50 @@
 import baseConfig from './base';
+import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import { CSS_MODULES_IDENTIFIER } from './constants';
+import { SCSS_LOADERS } from './constants';
 
 const plugins = [
-  new ExtractTextPlugin('styles.css')
+  new ExtractTextPlugin('[name].css'),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    filename: '[name].js',
+    minChunks: module => /node_modules/.test(module.resource)
+  }),
+  new webpack.optimize.ModuleConcatenationPlugin()
 ];
 
 const loaders = [
   {
     test: /\.jsx$|\.js$/,
     loader: 'babel-loader',
-    exclude: /node_modules/
+    exclude: /node_modules/,
+    options: {
+      presets: [
+        [ 'es2015', { modules: false } ]
+      ]
+    }
   },
   {
-    test: /\.(css|scss)$/,
+    test: /\.css$/,
     loader: ExtractTextPlugin.extract({
       fallback: 'style-loader',
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            minimize: false,
-            importLoaders: 1,
-            localIdentName: CSS_MODULES_IDENTIFIER
-          }
-        },
-        { loader: 'postcss-loader' },
-        { loader: 'sass-loader' }
-      ]
+      use: [ 'css-loader' ]
     })
+  },
+  {
+    test: /\.scss$/,
+    loader: ExtractTextPlugin.extract(SCSS_LOADERS)
   }
 ];
 
 export default {
   ...baseConfig,
+  entry: {
+    ...baseConfig.entry,
+    vendor: [
+      ...baseConfig.entry.vendor
+    ]
+  },
   devtool: 'source-map',
   plugins: [
     ...baseConfig.plugins,

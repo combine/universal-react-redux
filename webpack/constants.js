@@ -1,27 +1,22 @@
-/* The webpack dev server's port to use
+/* The following are environment variables imported from .env, and their
+ * defaults. Here, we destructure them from process.env and then export them as
+ * constants.
  */
-export const DEV_SERVER_PORT = process.env.DEV_SERVER_PORT || 3001;
+export const {
+  NODE_ENV, DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, WEBPACK_OUTPUT_PATH,
+  ASSET_HOST, ASSET_PATH, ANALYZE
+} = process.env;
 
-/* The hostname to use for the webpack dev server
- */
-export const DEV_SERVER_HOSTNAME = process.env.DEV_SERVER_HOSTNAME || 'localhost';
-
-/* The URL of the dev server including the hostname and port
- */
+// The URL of the dev server including the hostname and port
 export const DEV_SERVER_HOST_URL = `http://${DEV_SERVER_HOSTNAME}:${DEV_SERVER_PORT}`;
 
-/* The output path of the completed webpack build
- */
-export const OUTPUT_PATH = process.env.OUTPUT_PATH || 'dist/';
-
-/* The asset host to use inside the built webpack files. In product, set the
- * ASSET_HOST environment variable.
- */
-export const ASSET_HOST = (
-  process.env.NODE_ENV === 'production'
-    ? process.env.ASSET_HOST || '/dist/'
-    : process.env.ASSET_HOST || (DEV_SERVER_HOST_URL + '/' + OUTPUT_PATH)
-  );
+// The asset host to use for webpack files. In development, we will always use
+// the dev server's URL.
+export const ASSET_URL = (
+  NODE_ENV === 'development'
+    ? `${DEV_SERVER_HOST_URL}${WEBPACK_OUTPUT_PATH}`
+    : ASSET_HOST
+);
 
 /* The identifier to use for css-modules.
  */
@@ -43,6 +38,7 @@ export const RESOLVE_PATHS = {
   constants: 'common/js/constants',
   css: 'common/css',
   fonts: 'common/fonts',
+  gql: 'common/gql',
   images: 'common/images',
   layouts: 'common/layouts',
   lib: 'common/js/lib',
@@ -51,4 +47,29 @@ export const RESOLVE_PATHS = {
   routes: 'common/js/routes',
   selectors: 'common/js/selectors',
   store: 'common/js/store'
+};
+
+// Loader options to use for .scss files. This is here to avoid repetition
+// between different webpack config files.
+export const SCSS_LOADERS = {
+  fallback: 'style-loader',
+  use: [
+    {
+      loader: 'css-loader',
+      options: {
+        modules: true,
+        minimize: false,
+        importLoaders: 1,
+        localIdentName: CSS_MODULES_IDENTIFIER
+      }
+    },
+    { loader: 'postcss-loader' },
+    { loader: 'sass-loader' },
+    {
+      loader: 'sass-resources-loader',
+      options: {
+        resources: './common/css/utils/*.scss'
+      }
+    }
+  ]
 };
