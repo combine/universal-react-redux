@@ -1,6 +1,5 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import rootReducer from 'reducers';
-import DevTools from 'containers/DevTools';
 import { createLogger } from 'redux-logger';
 import { routerMiddleware } from 'react-router-redux';
 
@@ -17,9 +16,7 @@ export default function configureStore(initialState, history = null) {
   }
 
   // Add universal enhancers here
-  let enhancers = [
-    DevTools.instrument()
-  ];
+  let enhancers = [];
 
   const enhancer = compose(...[
     applyMiddleware(...middleware),
