@@ -1,9 +1,10 @@
-'use strict';
+require('dotenv-safe').load();
 
-const isDev = process.env.NODE_ENV === 'development';
+const { NODE_ENV, APPLICATION_PORT, ASSET_URL } = require('../webpack/constants');
+const isDev = NODE_ENV === 'development';
 const configFile = isDev ? 'development' : 'production';
 const webpackConfig = require(`../webpack/${configFile}`).default;
-const applicationPort = process.env.APPLICATION_PORT || (isDev ? 3000 : 80);
+const applicationPort = APPLICATION_PORT || 3000;
 import packageJson from '../package.json';
 
 export default {
@@ -13,5 +14,5 @@ export default {
 
   // launch environment
   port: applicationPort,
-  assetHost: process.env.ASSET_HOST || webpackConfig.output.publicPath
+  assetUrl: ASSET_URL || webpackConfig.output.publicPath
 };

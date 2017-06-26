@@ -1,9 +1,17 @@
 require('babel-register');
 
+const fs = require('fs');
+const { addPath } = require('app-module-path');
+
 // Adds common/js to the app module path so we can access local modules without
 // having to use relative paths on the server-side. This is done on the client
 // side using webpack's `resolve`.
-require('app-module-path').addPath('common/js');
+addPath('common/js');
+
+// HTML files are read as pure strings
+require.extensions['.html'] = (module, filename) => {
+  module.exports = fs.readFileSync(filename, 'utf8');
+};
 
 // css-modules-require-hook package allows us to require css files on the server.
 require('css-modules-require-hook')({
