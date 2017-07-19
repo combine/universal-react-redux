@@ -16,6 +16,11 @@ Install [yarn](https://github.com/yarnpkg/yarn) if you don't have it already:
 npm install -g yarn
 ```
 
+Then copy environment variables and edit them if necessary:
+```
+cp .env.example .env
+```
+
 Then:
 ```
 yarn install
@@ -29,6 +34,8 @@ For production builds:
 ```
 yarn run prod:start
 ```
+
+Note: pm2 must be installed to run production builds.
 
 ## Directory Structure
 ```
