@@ -1,12 +1,9 @@
-require('dotenv-safe').load();
-
 import path from 'path';
 import webpack from 'webpack';
 import mapValues from 'lodash/mapValues';
 import isomorphicConfig from './isomorphic';
 import IsomorphicPlugin from 'webpack-isomorphic-tools/plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import Dotenv from 'dotenv-webpack';
 import {
   ANALYZE, NODE_ENV, WEBPACK_OUTPUT_PATH, ASSET_URL, RESOLVE_PATHS
 } from './constants';
@@ -17,7 +14,6 @@ const isomorphicPlugin = new IsomorphicPlugin(isomorphicConfig).development(isDe
 const plugins = [
   isomorphicPlugin,
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|es/),
-  new Dotenv({ safe: true }),
   new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify(NODE_ENV)

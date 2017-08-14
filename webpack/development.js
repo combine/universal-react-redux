@@ -1,9 +1,13 @@
+require('dotenv-safe').load();
+
 import baseConfig from './base';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 import { SCSS_LOADERS } from './constants';
 
 const plugins = [
+  new Dotenv({ safe: true }),
   new ExtractTextPlugin('[name].css'),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
