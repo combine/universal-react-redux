@@ -11,6 +11,7 @@ import configureStore from 'store';
 import serveStatic from 'serve-static';
 import compression from 'compression';
 import App from 'containers/App';
+import Api from './api';
 
 const app = new Express();
 const port = config.port;
@@ -20,6 +21,9 @@ app.use(compression());
 
 // Use this middleware to serve up static files built into dist
 app.use('/dist', serveStatic(path.join(__dirname, '../dist')));
+
+// Mount the REST API
+app.use('/api', Api);
 
 // This is fired every time the server side receives a request
 app.use(handleRender);
