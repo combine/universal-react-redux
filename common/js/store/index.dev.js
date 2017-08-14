@@ -1,4 +1,5 @@
 import { compose, createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from 'reducers';
 import { createLogger } from 'redux-logger';
 import { routerMiddleware } from 'react-router-redux';
@@ -8,6 +9,7 @@ export default function configureStore(initialState, history = null) {
    * Configure this array with the middleware that you want included
    */
   let middleware = [
+    thunk,
     createLogger()
   ];
 
