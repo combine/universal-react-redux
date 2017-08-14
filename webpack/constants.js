@@ -68,7 +68,7 @@ export const SCSS_LOADERS = {
     {
       loader: 'sass-resources-loader',
       options: {
-        resources: './common/css/utils/*.scss'
+        resources: './common/css/*.scss'
       }
     }
   ]
