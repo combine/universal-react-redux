@@ -72,6 +72,15 @@ component with the same name, for example:
 This project supports the awesome [Redux Devtools Extension](https://github.com/zalmoxisus/redux-devtools-extension). Install the
 Chrome or Firefox extension and it should just work.
 
+## Server Side Rendering (SSR) and Asynchronous Data Fetching
+When rendering components on the server, you'll find that you may need to fetch
+some data before it can be rendered. The [server code](server/server.js) looks
+for a `fetchData` method on the container component and its child components,
+then executes all of them and only renders after the promises have all been
+resolved.
+
+See the [TodosContainer](common/js/containers/Todos/index.js) for an example.
+
 ## Writing Tests
 The default testing framework is Mocha, though you can use whatever you want.
 Make sure you have it installed:

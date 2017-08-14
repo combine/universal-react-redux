@@ -5,7 +5,8 @@ import isomorphicConfig from './isomorphic';
 import IsomorphicPlugin from 'webpack-isomorphic-tools/plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import {
-  ANALYZE, NODE_ENV, WEBPACK_OUTPUT_PATH, ASSET_URL, RESOLVE_PATHS
+  ANALYZE, NODE_ENV, WEBPACK_OUTPUT_PATH, ASSET_URL, RESOLVE_PATHS,
+  APPLICATION_BASE_URL
 } from './constants';
 
 const isDev = NODE_ENV === 'development';
@@ -16,7 +17,8 @@ const plugins = [
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|es/),
   new webpack.DefinePlugin({
     'process.env': {
-      'NODE_ENV': JSON.stringify(NODE_ENV)
+      'NODE_ENV': JSON.stringify(NODE_ENV),
+      'APPLICATION_BASE_URL': JSON.stringify(APPLICATION_BASE_URL)
     }
   })
 ];

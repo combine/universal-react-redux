@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addTodo, toggleTodo, removeTodo } from 'actions/todos';
+import { addTodo, toggleTodo, removeTodo, fetchTodos } from 'actions/todos';
 import { Container, Header, Checkbox, List, Button, Form } from 'semantic-ui-react';
 import classnames from 'classnames';
 import css from './index.scss';
@@ -11,11 +11,19 @@ const cx = classnames.bind(css);
 class TodosContainer extends Component {
 
   static propTypes = {
-    todos: PropTypes.array.isRequired,
+    todos: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
-  state = { todoText: null };
+  state = { todoText: '' };
+
+  componentDidMount() {
+    const { dispatch, todos: { isFetched } } = this.props;
+
+    if (!isFetched) {
+      dispatch(fetchTodos());
+    }
+  }
 
   submitTodo = (ev) => {
     const { dispatch } = this.props;
@@ -43,7 +51,7 @@ class TodosContainer extends Component {
   }
 
   render() {
-    const { todos } = this.props;
+    const { todos: { todos } } = this.props;
     const { todoText } = this.state;
 
     return (
@@ -63,7 +71,11 @@ class TodosContainer extends Component {
                   />
                 </List.Content>
                 <List.Content floated="left">
-                  <Checkbox type="checkbox" onChange={() => this.checkTodo(id)} />
+                  <Checkbox
+                    type="checkbox"
+                    checked={completed}
+                    onChange={() => this.checkTodo(id)}
+                  />
                 </List.Content>
                 <List.Content className={cx(css.text, { [css.completed]: completed })}>
                   {text}
@@ -76,7 +88,7 @@ class TodosContainer extends Component {
           <Form.Group>
             <Form.Input
               onChange={this.onTodoChange}
-              value={todoText} 
+              value={todoText}
               type="text"
               placeholder="Add a todo..." />
             <Form.Button content="Add" icon="plus" />
@@ -87,8 +99,10 @@ class TodosContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  todos: state.todos
-});
+TodosContainer.fetchData = ({ store }) => {
+  return store.dispatch(fetchTodos());
+};
+
+const mapStateToProps = ({ todos }) => ({ todos });
 
 export default connect(mapStateToProps)(TodosContainer);
