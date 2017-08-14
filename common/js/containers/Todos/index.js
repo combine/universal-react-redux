@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import { addTodo, toggleTodo, removeTodo, fetchTodos } from 'actions/todos';
 import { Container, Header, Checkbox, List, Button, Form } from 'semantic-ui-react';
 import classnames from 'classnames';
@@ -56,7 +57,10 @@ class TodosContainer extends Component {
 
     return (
       <Container>
-        <Header>To-Dos</Header>
+        <Helmet>
+          <title>To-Do List</title>
+        </Helmet>
+        <Header>To-Do List</Header>
         <List divided className={css.todos}>
           {todos.map((todo, idx) => {
             const { id, text, completed } = todo;
