@@ -14,12 +14,15 @@ export const fetchTodosSuccess = generateActionCreator(FETCH_TODOS_SUCCESS, 'tod
 export const fetchTodosFailure = generateActionCreator(FETCH_TODOS_FAILURE, 'error');
 
 export const fetchTodos = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(fetchTodosRequest());
 
-    return fetch('/api/todos', { method: 'GET' })
-      .then(res => res.json())
-      .then(todos => dispatch(fetchTodosSuccess(todos)))
-      .catch(error => dispatch(fetchTodosFailure(error)));
+    try {
+      const response = await fetch('/api/todos', { method: 'GET' });
+      const todos = await response.json();
+      dispatch(fetchTodosSuccess(todos));
+    } catch (e) {
+      dispatch(fetchTodosFailure(e.message));
+    }
   };
 };

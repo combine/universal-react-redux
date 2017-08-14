@@ -81,6 +81,10 @@ resolved.
 
 See the [TodosContainer](common/js/containers/Todos/index.js) for an example.
 
+## Async / Await
+This project uses `async/await`, available by default in Node.js v8.x.x or
+higher. If you experience errors, please upgrade your version of Node.js.
+
 ## Writing Tests
 The default testing framework is Mocha, though you can use whatever you want.
 Make sure you have it installed:
