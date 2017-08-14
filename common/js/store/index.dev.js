@@ -20,7 +20,10 @@ export default function configureStore(initialState, history = null) {
   // Add universal enhancers here
   let enhancers = [];
 
-  const enhancer = compose(...[
+  const composeEnhancers = (
+    typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ) || compose;
+  const enhancer = composeEnhancers(...[
     applyMiddleware(...middleware),
     ...enhancers
   ]);
