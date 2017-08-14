@@ -41,7 +41,7 @@ Note: pm2 must be installed to run production builds.
 ```
 ├── client                         # Client-side code
 ├── common                         # Shared code between client and server
-│   ├── css
+│   ├── css                        # CSS/Sass Resources
 │   ├── fonts
 │   ├── images
 │   ├── js
@@ -67,6 +67,10 @@ component with the same name, for example:
 │   ├── Header.js
 │   ├── Header.scss
 ```
+
+## Redux Devtools
+This project supports the awesome [Redux Devtools Extension](https://github.com/zalmoxisus/redux-devtools-extension). Install the
+Chrome or Firefox extension and it should just work.
 
 ## Writing Tests
 The default testing framework is Mocha, though you can use whatever you want.
