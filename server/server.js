@@ -37,13 +37,26 @@ function handleRender(req, res) {
 
   // See react-router's Server Rendering section:
   // https://reacttraining.com/react-router/web/guides/server-rendering
-  const match = routes.reduce((acc, route) => {
-    const { path, exact } = route;
-    return matchPath(req.url, path, { exact }) || acc || null;
-  });
+  const matches = routes.reduce((matches, route) => {
+    const { path } = route;
+    const match = matchPath(req.url, { path, exact: true, strict: false });
+
+    if (match) {
+      const wc = route.component && route.component.WrappedComponent;
+
+      matches.push({
+        route,
+        match,
+        fetchData: (wc && wc.fetchData) || (() => Promise.resolve())
+      });
+
+    }
+
+    return matches;
+  }, []);
 
   // No matched route, render a 404 page.
-  if (!match) {
+  if (!matches.length) {
     res.status(404).send(render(<ErrorPage code={404} />, finalState));
     return;
   }
@@ -57,7 +70,22 @@ function handleRender(req, res) {
     </Provider>
   );
 
-  res.status(200).send(render(component, finalState));
+  // an array of fetchData promises.
+  const fetchData = matches.map(match => {
+    const { fetchData, ...rest } = match; // eslint-disable-line no-unused-vars
+
+    // return fetch data Promise, excluding unnecessary fetchData method
+    return match.fetchData({ store, ...rest });
+  });
+
+  // Execute the render only after all promises have been resolved.
+  Promise
+    .all(fetchData)
+    .then(() => {
+      const state = store.getState();
+      res.status(200).send(render(component, state));
+    });
+
 }
 
 app.listen(port, (error) => {
