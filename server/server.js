@@ -6,15 +6,15 @@ import { StaticRouter, matchPath } from 'react-router';
 import render from './render';
 import routes from 'routes';
 import ErrorPage from 'components/ErrorPage';
-import config from './config';
 import configureStore from 'store';
 import serveStatic from 'serve-static';
 import compression from 'compression';
 import App from 'containers/App';
 import Api from './api';
 
+const { PORT, APPLICATION_PORT } = process.env;
 const app = new Express();
-const port = config.port;
+const port = PORT || APPLICATION_PORT || 3000;
 
 // gzip
 app.use(compression());
