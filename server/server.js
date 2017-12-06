@@ -12,7 +12,7 @@ let app = new express();
 // Secure with helmet
 app.use(helmet());
 
-// ensure https is used in production
+/* Ensures SSL in used in production. To use, uncomment the below.
 app.use(function (req, res, next) {
   var sslUrl;
 
@@ -23,6 +23,7 @@ app.use(function (req, res, next) {
 
   return next();
 });
+*/
 
 // parse cookies!
 app.use(cookieParser());
