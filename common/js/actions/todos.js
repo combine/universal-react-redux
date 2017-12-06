@@ -2,8 +2,8 @@ import {
   ADD_TODO, REMOVE_TODO, TOGGLE_TODO,
   FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE
 } from 'constants/index';
-import { fetch } from 'lib/api';
-import generateActionCreator from 'lib/generateActionCreator';
+import { fetch } from 'helper/api';
+import generateActionCreator from 'helper/generateActionCreator';
 
 export const addTodo = generateActionCreator(ADD_TODO, 'text');
 export const removeTodo = generateActionCreator(REMOVE_TODO, 'id');

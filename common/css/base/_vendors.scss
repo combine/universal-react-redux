@@ -1,0 +1,9 @@
+// Import bootstrap-sass as needed
+$bootstrap-sass-asset-helper: true;
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$screen-lg-min: $app-max-width !global;
+$container-lg: $app-max-width !global;
+
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/grid";

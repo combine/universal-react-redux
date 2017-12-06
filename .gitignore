@@ -1,8 +1,12 @@
+npm-error.log
 .env
 node_modules
 npm-debug.log*
 .DS_Store
 
 # ignore built static files
-dist/
-webpack-assets.json
+/dist
+/webpack-assets.json
+
+# webpack-built server files
+server/renderer/*.built.js

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL, SCSS_LOADERS } from './constants';
+import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL } from './constants';
 import WebpackDevServer from 'webpack-dev-server';
 import webpack from 'webpack';
 import baseConfig from './base';
@@ -24,19 +24,7 @@ const plugins = [
 ];
 
 // Additional loaders
-const loaders = [
-  {
-    test: /\.css$/,
-    use: [ 'style-loader', 'css-loader' ]
-  },
-  {
-    test: /\.scss$/,
-    use: [
-      'style-loader',
-      ...SCSS_LOADERS.use
-    ]
-  }
-];
+const loaders = [];
 
 const config = Object.assign({}, baseConfig, {
   devtool: 'eval',

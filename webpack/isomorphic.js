@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   assets: {
     images: {
       extensions: [
