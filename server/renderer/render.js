@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { Helmet } from 'react-helmet';
 
 const { NODE_ENV } = process.env;
-const compile = template(require('../common/layouts/server.html'));
+const compile = template(require('templates/layouts/application.html'));
 const env = NODE_ENV || 'development';
 
 export default function render(component, initialState = {}) {
@@ -13,7 +13,6 @@ export default function render(component, initialState = {}) {
   }
 
   const assets = global.ISOTools.assets();
-  const favicon = assets.assets['./common/images/favicon.png'];
   const vendorJs = assets.javascript.vendor;
   const appJs = assets.javascript.app;
   const html = renderToString(component);
@@ -22,6 +21,6 @@ export default function render(component, initialState = {}) {
   const appCss = assets.styles.app;
 
   return compile(
-    { html, helmet, favicon, vendorCss, appCss, vendorJs, appJs, initialState }
+    { html, helmet, vendorCss, appCss, vendorJs, appJs, initialState }
   );
 }

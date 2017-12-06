@@ -4,7 +4,7 @@ const exec = require('child_process').exec;
 // post-install tasks rather than using a bash script since that wouldn't work
 // on Windows.
 if (process.env.NODE_ENV === 'production') {
-  exec('yarn run prod:build', (error, stdout, stderr) => {
+  exec('npm run prod:build', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;

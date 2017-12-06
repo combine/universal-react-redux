@@ -5,9 +5,10 @@
   ],
   "plugins": [
     "react-hot-loader/babel",
+    "transform-es2015-modules-commonjs",
     "transform-class-properties",
     "transform-decorators",
-    "transform-object-rest-spread",
-    ["resolver", { "resolveDirs": ["common"] }]
+    "transform-export-extensions",
+    "transform-object-rest-spread"
   ]
 }

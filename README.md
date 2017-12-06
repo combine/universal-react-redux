@@ -11,20 +11,15 @@ promise that future updates will not break your existing application.**
 
 ## Get started
 
-Install [yarn](https://github.com/yarnpkg/yarn) if you don't have it already:
-```
-npm install -g yarn
-```
-
-Then copy environment variables and edit them if necessary:
+Copy environment variables and edit them if necessary:
 ```
 cp .env.example .env
 ```
 
 Then:
 ```
-yarn install
-yarn start
+npm install
+npm start
 ```
 
 Direct your browser to `http://localhost:3000`.
@@ -32,10 +27,14 @@ Direct your browser to `http://localhost:3000`.
 For production builds:
 
 ```
-yarn run prod:start
+npm run prod:build
+npm run serve
 ```
 
-Note: pm2 must be installed to run production builds.
+For Heroku, simply add a `Procfile`:
+```
+web: npm run serve
+```
 
 ## Directory Structure
 ```
@@ -93,13 +92,13 @@ Make sure you have it installed:
 npm install -g mocha
 ```
 
-Tests should reside alongside the component/module/selector/etc that it is
-testing. For example:
+Tests should reside in `test/spec` in their appropriate folders:
 
 ```
-├── reducers
-│   ├── todos.js
-│   ├── todos.test.js
+├── test
+│   ├── spec
+│   │   ├── api
+│   │   │   ├── todos.test.js
 ```
 
 Tests can be written with ES2015, since it passes through `babel-register`.
