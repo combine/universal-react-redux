@@ -1,7 +1,7 @@
 {
   "name": "universal-react-redux",
   "description": "A universal starter kit built with ES2015, react, react-router and redux. Server rendering with react and express. Bundled with Webpack with HMR transforms and css-modules support.",
-  "version": "4.1.1",
+  "version": "5.0.0",
   "license": "MIT",
   "main": "client/index.js",
   "repository": {
@@ -129,6 +129,7 @@
   "dependencies": {
     "app-module-path": "^2.2.0",
     "autoprefixer": "^7.2.1",
+    "axios": "^0.17.1",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -193,6 +194,7 @@
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-isomorphic-tools": "^3.0.5",
+    "webpack-node-externals": "^1.6.0",
     "yn": "^2.0.0"
   }
 }

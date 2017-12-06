@@ -65,6 +65,6 @@ export const SERVER_RESOLVE_PATHS = {
   auth: 'server/auth',
   models: 'server/models',
   services: 'server/services',
-  constants: 'server/constants',
+  constants: 'common/js/constants',
   lib: 'server/lib'
 };

@@ -1,6 +1,12 @@
-import isomorphicFetch from 'isomorphic-fetch';
+import axios from 'axios';
 
-const apiUrl = process.env.APPLICATION_BASE_URL || '';
+const headers = { 'Content-Type': 'application/json' };
+const baseURL = process.env.APPLICATION_BASE_URL || '';
+const api = axios.create({ baseURL, headers, timeout: 200000 });
 
-// Overrides the fetch() method to add the base API url to the front.
-export const fetch = (url, ...rest) => isomorphicFetch(apiUrl + url, ...rest);
+api.interceptors.response.use(
+  (response) => Promise.resolve(response.data)  ,
+  (err) => Promise.reject(err.response.data)
+);
+
+module.exports = api;

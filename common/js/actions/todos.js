@@ -2,7 +2,7 @@ import {
   ADD_TODO, REMOVE_TODO, TOGGLE_TODO,
   FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE
 } from 'constants/index';
-import { fetch } from 'helper/api';
+import api from 'helper/api';
 import generateActionCreator from 'helper/generateActionCreator';
 
 export const addTodo = generateActionCreator(ADD_TODO, 'text');
@@ -14,15 +14,19 @@ export const fetchTodosSuccess = generateActionCreator(FETCH_TODOS_SUCCESS, 'tod
 export const fetchTodosFailure = generateActionCreator(FETCH_TODOS_FAILURE, 'error');
 
 export const fetchTodos = () => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(fetchTodosRequest());
 
-    try {
-      const response = await fetch('/api/todos', { method: 'GET' });
-      const todos = await response.json();
-      dispatch(fetchTodosSuccess(todos));
-    } catch (e) {
-      dispatch(fetchTodosFailure(e.message));
-    }
+    return api.get('/api/todos')
+      .then(todos => {
+        dispatch(fetchTodosSuccess(todos));
+
+        return Promise.resolve(todos);
+      })
+      .catch(error => {
+        dispatch(fetchTodosFailure(error));
+
+        return Promise.reject(error);
+      });
   };
 };
