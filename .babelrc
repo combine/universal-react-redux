@@ -1,6 +1,12 @@
 {
   "presets": [
-    "es2015",
+    [
+      "env", {
+      "targets": {
+        "node": "current",
+        "uglify": true
+      }
+    }],
     "react"
   ],
   "plugins": [
