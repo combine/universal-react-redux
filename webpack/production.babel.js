@@ -1,8 +1,11 @@
 import webpack from 'webpack';
 import baseConfig from './base';
 import CompressionPlugin from 'compression-webpack-plugin';
-
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 const plugins = [
+  new webpack.BannerPlugin({
+    banner: 'hash:[hash], chunkhash:[chunkhash], name:[name], filebase:[filebase], query:[query], file:[file]',
+  }),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: '[name].[hash].js',
@@ -10,10 +13,15 @@ const plugins = [
   }),
   new webpack.optimize.AggressiveMergingPlugin(),
   new webpack.optimize.ModuleConcatenationPlugin(),
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      screw_ie8: true,
-      warnings: false
+  new UglifyJSPlugin({
+    uglifyOptions: {
+      compress: {
+        warnings: false
+      },
+      mangle: true,
+      output: {
+        comments: false,
+      },
     }
   }),
   new CompressionPlugin({
