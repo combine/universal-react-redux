@@ -1,6 +1,10 @@
 {
   "parser": "babel-eslint",
   "rules": {
+    "max-len": [
+      "error",
+      { "code": 80, "tabWidth": 2 }
+    ],
     "indent": [
       1,
       2,
@@ -30,10 +34,12 @@
     "node": true
   },
   "globals": {
-    '__BASE_URL__': true,
-    expect: true
+    "expect": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
@@ -43,6 +49,7 @@
     "ecmaVersion": 6
   },
   "plugins": [
-      "react"
+    "babel",
+    "react"
   ]
 }
