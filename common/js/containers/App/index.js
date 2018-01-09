@@ -3,6 +3,7 @@ import { Switch } from 'react-router-dom';
 import { RouteWithSubRoutes } from 'components/common';
 import { Container } from 'semantic-ui-react';
 import { Header, Footer } from 'components/common';
+import { hot } from 'react-hot-loader';
 import routes from 'routes';
 
 const App = () => (
@@ -17,4 +18,4 @@ const App = () => (
   </Container>
 );
 
-export default App;
+export default hot(module)(App);
