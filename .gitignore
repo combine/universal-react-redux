@@ -7,6 +7,3 @@ npm-debug.log*
 # ignore built static files
 /dist
 /webpack-assets.json
-
-# webpack-built server files
-server/renderer/*.built.js

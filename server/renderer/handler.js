@@ -24,10 +24,14 @@ export default function handleRender(req, res) {
 
   // See react-router's Server Rendering section:
   // https://reacttraining.com/react-router/web/guides/server-rendering
-  const matchRoutes = (routes) => {
+  const matchRoutes = routes => {
     return routes.reduce((matches, route) => {
       const { path } = route;
-      const match = matchPath(req.baseUrl, { path, exact: true, strict: false });
+      const match = matchPath(req.baseUrl, {
+        path,
+        exact: true,
+        strict: false
+      });
 
       if (match) {
         const wc = route.component && route.component.WrappedComponent;
@@ -80,18 +84,16 @@ export default function handleRender(req, res) {
   });
 
   // Execute the render only after all promises have been resolved.
-  Promise
-    .all(fetchData)
-    .then(() => {
-      const state = store.getState();
-      const markup = render(component, state);
+  Promise.all(fetchData).then(() => {
+    const state = store.getState();
+    const markup = render(component, state);
 
-      // A 301 redirect was rendered somewhere if context.url exists after
-      // rendering has happened.
-      if (context.url) {
-        return res.redirect(301, context.url);
-      }
+    // A 301 redirect was rendered somewhere if context.url exists after
+    // rendering has happened.
+    if (context.url) {
+      return res.redirect(301, context.url);
+    }
 
-      return res.status(200).send(markup);
-    });
+    return res.status(200).send(markup);
+  });
 }

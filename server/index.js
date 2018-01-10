@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const config = require('../config');
 const env = process.env.NODE_ENV || 'development';
 const { addPath } = require('app-module-path');
 
@@ -27,7 +28,7 @@ if (env === 'development') {
   // webpack and babel.
   require('css-modules-require-hook')({
     extensions: ['.scss'],
-    generateScopedName: require('../webpack/constants').CSS_MODULES_IDENTIFIER,
+    generateScopedName: config.cssModulesIdentifier,
     devMode: true
   });
 
@@ -40,10 +41,12 @@ const configureIsomorphicTools = function(server) {
   // this must be equal to the Webpack configuration's "context" parameter
   const basePath = path.resolve(__dirname, '..');
   const ISOTools = require('webpack-isomorphic-tools');
-  const isoConfig = require('../webpack/isomorphic');
 
   // this global variable will be used later in express middleware
-  global.ISOTools = new ISOTools(isoConfig).server(basePath, () => server);
+  global.ISOTools = new ISOTools(config.isomorphicConfig).server(
+    basePath,
+    () => server
+  );
 };
 
 const startServer = () => {
@@ -55,11 +58,11 @@ const startServer = () => {
   if (!module.parent) {
     configureIsomorphicTools(server);
 
-    server.listen(port, (error) => {
+    server.listen(port, error => {
       if (error) {
         console.error(error);
       } else {
-        console.info(`Application server mounted locally on port ${port}.`);
+        console.info(`Application server mounted on http://localhost:${port}.`);
       }
     });
   }

@@ -1,22 +1,19 @@
 # universal-react-redux
 
-A universal starter kit built with ES2015, react, react-router and redux. Server
+A simple, clean, React and Redux boilerplate with sensible defaults. Server
 rendering with react and express. Bundled with Webpack, with HMR transforms and
 support for `css-modules`.
-
-**NOTE: This repository is meant to be continually updated to use the latest in
-the react ecosystem. It is meant to be more of a guiding template for you to
-customize and build your own universal apps with React and Redux. I do not
-promise that future updates will not break your existing application.**
 
 ## Get started
 
 Copy environment variables and edit them if necessary:
+
 ```
 cp .env.example .env
 ```
 
 Then:
+
 ```
 npm install
 npm start
@@ -30,6 +27,7 @@ For production builds:
 npm run prod:build
 npm run serve
 ```
+
 Or simply
 
 ```
@@ -37,59 +35,76 @@ npm run prod
 ```
 
 For Heroku, simply add a `Procfile`:
+
 ```
 web: npm run serve
 ```
 
-## Directory Structure
-```
-├── client                         # Client-side code
-├── common                         # Shared code between client and server
-│   ├── css                        # CSS/Sass Resources
-│   ├── fonts
-│   ├── images
-│   ├── js
-│   │   ├── actions
-│   │   ├── components            # "Dumb" components
-│   │   ├── containers            # Smart containers
-│   │   ├── lib                   # Misc. libraries like helpers, etc.
-│   │   ├── middleware            # Middleware for redux
-│   │   ├── reducers              # Redux reducers
-│   │   ├── routes                # Routes each have an index.js which exports a react-router Route.
-│   │   └── store                 # Store configuration for production and dev.
-│   └── layouts                   # Layout files to be rendered by the server.
-├── server                        # Server-side code
-├── webpack                       # Webpack configuration files
-```
-
 ## CSS Modules
+
 This project uses [CSS Modules](https://github.com/css-modules/css-modules).
 Class names should be in `camelCase`. Place the css file as a sibling to the
 component with the same name, for example:
+
 ```
 ├── components
 │   ├── Header.js
 │   ├── Header.scss
 ```
 
+## Environment Variables
+
+In development mode, environment variables are loaded by `dotenv` off the `.env`
+file in your root directory. In production, you'll have to manage these
+yourself. In Heroku, this is simple as running:
+
+```
+heroku config:set FOO=bar
+```
+
 ## Redux Devtools
+
 This project supports the awesome [Redux Devtools Extension](https://github.com/zalmoxisus/redux-devtools-extension). Install the
 Chrome or Firefox extension and it should just work.
 
-## Server Side Rendering (SSR) and Asynchronous Data Fetching
+## Pre-fetching Data for Server Side Rendering (SSR)
+
 When rendering components on the server, you'll find that you may need to fetch
 some data before it can be rendered. The [server code](server/server.js) looks
 for a `fetchData` method on the container component and its child components,
 then executes all of them and only renders after the promises have all been
 resolved.
 
-See the [TodosContainer](common/js/containers/Todos/index.js) for an example.
+```
+//  As an ES6 class
+
+class TodosContainer extends React.Component {
+  static fetchData = ({ store }) => {
+    return store.dispatch(fetchTodos());
+  };
+}
+
+// As a functional stateless component
+
+const TodosContainer = (props) => {
+  const { todos } = props;
+  return (
+    // ...component code
+  );
+}
+
+TodosContainer.fetchData = ({ store }) => {
+  return store.dispatch(fetchTodos());
+}
+```
 
 ## Async / Await
+
 This project uses `async/await`, available by default in Node.js v8.x.x or
 higher. If you experience errors, please upgrade your version of Node.js.
 
-## Writing Tests
+## Testing
+
 The default testing framework is Mocha, though you can use whatever you want.
 Make sure you have it installed:
 
@@ -109,7 +124,9 @@ Tests should reside in `test/spec` in their appropriate folders:
 Tests can be written with ES2015, since it passes through `babel-register`.
 
 ## Running Tests
+
 To run a single test:
+
 ```
 npm test /path/to/single.test.js
 ```
@@ -126,7 +143,7 @@ To run all tests:
 npm run test:all
 ```
 
-This will run all files that are suffixed with a `.test.js`.
+This will run all tests in the `test/spec` directory.
 
 ## Running ESLint
 
@@ -136,16 +153,15 @@ npm run lint
 
 Check the `.eslintignore` file for directories excluded from linting.
 
-## Changing the Asset Host
+## Changing the public asset path
 
-In production scenarios, you may want your assets to be hosted elsewhere besides
-on your server. Just set an environment variable to point the asset host to
-where ever you want, as defaults to `localhost:3001`. Just set it to the CDN of
-your choice.
+By default, assets are built into `/dist/public`. This path is then served by
+express under the path `/assets`. This is the public asset path. In a production
+scenario, you may want your assets to be hosted on a CDN. To do so, just change
+the `PUBLIC_ASSET_PATH` environment variant.
 
 If you're using Heroku:
+
 ```
-heroku config:set ASSET_HOST=/dist/
-# OR
-heroku config:set ASSET_HOST=https://s3.amazonaws.com/mybucket/myasssets/
+heroku config:set PUBLIC_ASSET_PATH=https://my.cdn.com
 ```

@@ -1,8 +1,13 @@
 /* eslint-disable no-console */
-import { DEV_SERVER_PORT, DEV_SERVER_HOSTNAME, DEV_SERVER_HOST_URL } from './constants';
 import WebpackDevServer from 'webpack-dev-server';
 import webpack from 'webpack';
 import baseConfig from './base';
+
+const {
+  DEV_SERVER_PORT,
+  DEV_SERVER_HOSTNAME,
+  DEV_SERVER_HOST_URL
+} = process.env;
 
 // Webpack Entry Point for dev server
 const entry = [
@@ -36,7 +41,7 @@ const config = Object.assign({}, baseConfig, {
   }),
   plugins: [
     // don't use the first plugin (isomorphic plugin)
-    ...baseConfig.plugins.slice(1),
+    ...baseConfig.plugins,
     ...plugins
   ],
   module: Object.assign({}, baseConfig.module, {
@@ -47,7 +52,7 @@ const config = Object.assign({}, baseConfig, {
   })
 });
 
-console.info('Firing up Webpack dev server...');
+console.info('Firing up Webpack dev server...\n');
 
 new WebpackDevServer(webpack(config), {
   port: DEV_SERVER_PORT,
@@ -69,6 +74,6 @@ new WebpackDevServer(webpack(config), {
   if (err) {
     console.error(err);
   } else {
-    console.info(`Webpack dev server mounted at ${DEV_SERVER_HOST_URL}. Asset path: ${config.output.publicPath}`);
+    console.info(`Webpack dev server mounted at ${DEV_SERVER_HOST_URL}.`);
   }
 });

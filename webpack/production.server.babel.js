@@ -1,17 +1,32 @@
 import webpack from 'webpack';
-import nodeExternals from 'webpack-node-externals';
-import path from 'path';
+import baseConfig from './production.babel';
+import config from '../config';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import { mapValues } from 'lodash';
-import {
-  RESOLVE_PATHS, SERVER_RESOLVE_PATHS, CLIENT_ENV_VARS, CSS_MODULES_IDENTIFIER
-} from './constants';
+import nodeExternals from 'webpack-node-externals';
+import path from 'path';
+
+const plugins = [
+  new webpack.DefinePlugin({
+    'process.env': config.clientEnv
+  }),
+  new UglifyJSPlugin({
+    sourceMap: true
+  })
+];
 
 export default {
+  ...baseConfig,
+  context: null,
   target: 'node',
-  entry: [
-    './server/renderer/handleRender.js',
-  ],
+  entry: ['./server/renderer/handler.js'],
+  resolve: {
+    extensions: ['.js', '.jsx', '.scss'],
+    alias: mapValues(
+      { ...config.clientResolvePaths, ...config.serverResolvePaths },
+      str => path.join(process.cwd(), ...str.split('/'))
+    )
+  },
   externals: [
     // images are handled by isomorphic webpack.
     // html files are required directly
@@ -19,25 +34,12 @@ export default {
     // treat all node modules as external to keep this bundle small
     nodeExternals()
   ],
-  resolve: {
-    extensions: ['.js', '.jsx', '.scss'],
-    alias: mapValues({ ...RESOLVE_PATHS, ...SERVER_RESOLVE_PATHS }, (str) => (
-      path.join(process.cwd(), ...str.split('/'))
-    ))
-  },
   output: {
-    path: path.join(__dirname, ('../server/renderer')),
-    filename: './handleRender.built.js',
+    path: path.join(__dirname, '../', process.env.OUTPUT_PATH, 'renderer'),
+    filename: 'handler.built.js',
     libraryTarget: 'commonjs'
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': CLIENT_ENV_VARS
-    }),
-    new UglifyJSPlugin({
-      sourceMap: true
-    }),
-  ],
+  plugins: [...baseConfig.plugins, ...plugins],
   module: {
     rules: [
       {
@@ -60,7 +62,7 @@ export default {
               modules: true,
               minimize: false,
               importLoaders: 0,
-              localIdentName: CSS_MODULES_IDENTIFIER
+              localIdentName: config.cssModulesIdentifier
             }
           },
           { loader: 'postcss-loader' },

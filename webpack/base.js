@@ -1,67 +1,61 @@
+const isDev = process.env.NODE_ENV === 'development';
+if (isDev) require('dotenv').load();
+
 import yn from 'yn';
 import path from 'path';
 import webpack from 'webpack';
 import mapValues from 'lodash/mapValues';
-import isomorphicConfig from './isomorphic';
-import IsomorphicPlugin from 'webpack-isomorphic-tools/plugin';
+import IsoPlugin from 'webpack-isomorphic-tools/plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import {
-  ANALYZE, NODE_ENV, WEBPACK_OUTPUT_PATH, ASSET_URL, RESOLVE_PATHS,
-  CSS_MODULES_IDENTIFIER, CLIENT_ENV_VARS
-} from './constants';
+import config from '../config';
 
-const hot = yn(process.env.HOT) || false;
-const isDev = NODE_ENV === 'development';
-const isomorphicPlugin = new IsomorphicPlugin(isomorphicConfig).development(isDev);
-const extractText = new ExtractTextPlugin({
-  filename: '[name].[contenthash].css',
-  disable: process.env.NODE_ENV === 'development' && hot
+const ssr = yn(process.env.SSR) || false;
+const isoPlugin = new IsoPlugin(config.isomorphicConfig).development(isDev);
+const extractTextPlugin = new ExtractTextPlugin({
+  filename: isDev ? '[name].css' : '[name].[contenthash].css',
+  disable: ssr
 });
 
 const plugins = [
-  isomorphicPlugin,
-  extractText,
+  isoPlugin,
+  extractTextPlugin,
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|es/),
   new webpack.DefinePlugin({
-    'process.env': CLIENT_ENV_VARS
+    'process.env': config.clientEnv
   })
 ];
 
-if (ANALYZE) { plugins.push(new BundleAnalyzerPlugin()); }
+if (process.env.ANALYZE) {
+  plugins.push(new BundleAnalyzerPlugin());
+}
 
 export default {
   context: path.resolve(__dirname, '..'),
   entry: {
-    vendor: [
-      './client/vendor'
-    ],
-    app: [
-      './client/index'
-    ]
+    vendor: ['./client/vendor'],
+    app: ['./client/index']
   },
   output: {
-    path: path.join(__dirname, ('../' + WEBPACK_OUTPUT_PATH)),
+    path: path.join(__dirname, '../' + process.env.PUBLIC_OUTPUT_PATH),
     filename: '[name].js',
-    publicPath: `${ASSET_URL}/`
+    // Always prepend the dev server url in dev environment so assets will
+    // be loaded from webpack-dev-server.
+    publicPath: (isDev ? process.env.DEV_SERVER_HOST_URL : '')
+      + process.env.PUBLIC_ASSET_PATH + '/'
   },
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
-    alias: mapValues(RESOLVE_PATHS, (str) => (
+    alias: mapValues(config.clientResolvePaths, str =>
       path.join(process.cwd(), ...str.split('/'))
-    ))
+    )
   },
   module: {
     rules: [
       {
         test: /\.jsx$|\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          // NOTE: presets are configured in .babelrc rather than here.
-          // presets: []
-          cacheDirectory: true
-        }
+        loader: 'babel-loader'
       },
       {
         // For all .scss files that should be modularized. This should exclude
@@ -72,7 +66,7 @@ export default {
           path.resolve(__dirname, '../node_modules'),
           path.resolve(__dirname, '../common/css/base')
         ],
-        use: extractText.extract({
+        use: ['css-hot-loader'].concat(extractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             {
@@ -81,7 +75,7 @@ export default {
                 modules: true,
                 minimize: false,
                 importLoaders: 1,
-                localIdentName: CSS_MODULES_IDENTIFIER
+                localIdentName: config.cssModulesIdentifier
               }
             },
             { loader: 'postcss-loader' },
@@ -93,7 +87,7 @@ export default {
               }
             }
           ]
-        })
+        }))
       },
       {
         // for .scss modules that need to be available globally, we don't pass
@@ -103,7 +97,7 @@ export default {
           path.resolve(__dirname, '../node_modules'),
           path.resolve(__dirname, '../common/css/base')
         ],
-        use: extractText.extract({
+        use: extractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             { loader: 'postcss-loader' },
@@ -119,9 +113,9 @@ export default {
       },
       {
         test: /\.css$/,
-        use: extractText.extract({
+        use: extractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader'],
+          use: ['css-loader', 'postcss-loader']
         })
       },
       {
@@ -129,7 +123,7 @@ export default {
         loader: 'json-loader'
       },
       {
-        test: isomorphicPlugin.regular_expression('images'),
+        test: isoPlugin.regular_expression('images'),
         use: [
           {
             loader: 'url-loader',
