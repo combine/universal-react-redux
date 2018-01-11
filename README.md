@@ -1,8 +1,14 @@
 # universal-react-redux
 
-A simple, clean, React and Redux boilerplate with sensible defaults. Server
-rendering with react and express. Bundled with Webpack, with HMR transforms and
-support for `css-modules`.
+A universal React/Redux boilerplate with sensible defaults. Out of the box, this
+boilerplate comes with:
+
+- Server-side rendering with Express
+- Sane [webpack configurations](webpack/)
+- JS hot reloading with `react-hot-loader` and `webpack-dev-server`
+- CSS, SASS and `css-modules` support with hot reloading and no [flash of unstyled content](https://en.wikipedia.org/wiki/Flash_of_unstyled_content) (`css-hot-loader`)
+- Routing with `react-router-v4`
+- Full production builds that do not rely on `babel`.
 
 ## Get started
 
