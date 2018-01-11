@@ -43,7 +43,8 @@ module.exports = {
 
   serverResolvePaths: {
     api: 'server/api',
-    constants: 'common/js/constants'
+    constants: 'common/js/constants',
+    middleware: 'server/middleware'
   },
 
   // Isomorphic configuration
