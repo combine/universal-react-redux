@@ -64,16 +64,16 @@ heroku config:set FOO=bar
 
 ## Redux Devtools
 
-This project supports the awesome [Redux Devtools Extension](https://github.com/zalmoxisus/redux-devtools-extension). Install the
-Chrome or Firefox extension and it should just work.
+This project supports the awesome [Redux Devtools Extension](https://github.com/zalmoxisus/redux-devtools-extension).
+Install the Chrome or Firefox extension and it should just work.
 
 ## Pre-fetching Data for Server Side Rendering (SSR)
 
 When rendering components on the server, you'll find that you may need to fetch
-some data before it can be rendered. The [server code](server/server.js) looks
-for a `fetchData` method on the container component and its child components,
-then executes all of them and only renders after the promises have all been
-resolved.
+some data before it can be rendered. The [component renderer](server/renderer/handler.js)
+looks for a `fetchData` method on the container component and its child
+components, then executes all of them and only renders after the promises have
+all been resolved.
 
 ```
 //  As an ES6 class
