@@ -97,7 +97,7 @@ export default {
           path.resolve(__dirname, '../node_modules'),
           path.resolve(__dirname, '../common/css/base')
         ],
-        use: extractTextPlugin.extract({
+        use: ['css-hot-loader'].concat(extractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             { loader: 'postcss-loader' },
@@ -109,7 +109,7 @@ export default {
               }
             }
           ]
-        })
+        }))
       },
       {
         test: /\.css$/,
