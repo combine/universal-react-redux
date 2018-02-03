@@ -1,17 +1,38 @@
-# universal-react-redux
+# Universal React Redux Boilerplate
 
 A universal React/Redux boilerplate with sensible defaults. Out of the box, this
 boilerplate comes with:
 
 - Server-side rendering with Express
-- Code splitting with Webpack's dynamic `import()`s and [react-loadable](https://github.com/thejameskyle/react-loadable)
+- Code splitting with [dynamic imports](https://webpack.js.org/guides/code-splitting/#dynamic-imports) and [react-loadable](https://github.com/thejameskyle/react-loadable)
 - Sane [webpack configurations](webpack/)
-- JS hot reloading with `react-hot-loader` and `webpack-dev-server`
-- CSS, SASS and `css-modules` support with hot reloading and no [flash of unstyled content](https://en.wikipedia.org/wiki/Flash_of_unstyled_content) (`css-hot-loader`)
-- Routing with `react-router-v4`
+- JS hot reloading with [react-hot-loader (@next)](https://github.com/gaearon/react-hot-loader) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+- CSS, SASS and [css-modules](https://github.com/css-modules/css-modules) support with hot reloading and no [flash of unstyled content](https://en.wikipedia.org/wiki/Flash_of_unstyled_content) ([css-hot-loader](https://github.com/shepherdwind/css-hot-loader))
+- Routing with [react-router-v4](https://github.com/ReactTraining/react-router)
 - Full production builds that do not rely on `babel-node`.
 
-## Get started
+## Philosophy
+
+The JavaScript ecosystem is brimming with open source libraries. With advances
+in ES6 and commitments by the big tech companies to invest in JavaScript, the
+last several years have arguably turned web development into what was once a
+huge pain in the ass, to a pretty decently enjoyable experience.
+
+With so many different packages now available, we now have the freedom and the
+choice to craft applications to our exact specifications, reducing bloat and
+minimizing the number of code we need to support cross-platform apps. It really
+is a new world.
+
+However, with so many different developers working on different libraries,
+things are constantly in flux, and breaking changes are often introduced. It can
+be hard to keep up with the latest and greatest since they're always changing.
+
+To help alleviate this, we've collected some of the best practices and features
+from the React ecosystem and put them in one place. Although this boilerplate is
+fully production-capable as is, its main goal is to serve as an example of how
+to bring an application together using the latest tools in the ecosystem.
+
+## Development Mode
 
 Copy environment variables and edit them if necessary:
 
@@ -28,30 +49,45 @@ npm start
 
 Direct your browser to `http://localhost:3000`.
 
-For production builds:
+## Production Builds
+
+Add environment variables the way you normally would on your production system.
 
 ```
 npm run prod:build
 npm run serve
 ```
 
-Or simply
+Or simply:
 
 ```
 npm run prod
 ```
 
-For Heroku, simply add a `Procfile`:
+If using Heroku, simply add a `Procfile` in the root directory. The
+[postinstall](postinstall.js) script will do the rest.
 
 ```
 web: npm run serve
 ```
 
+## Environment Variables
+
+In development mode, environment variables are loaded by `dotenv` off the `.env`
+file in your root directory. In production, you'll have to manage these
+yourself.
+
+An example with Heroku:
+
+```
+heroku config:set FOO=bar
+```
+
 ## CSS Modules
 
 This project uses [CSS Modules](https://github.com/css-modules/css-modules).
-Class names should be in `camelCase`. Place the css file as a sibling to the
-component with the same name, for example:
+Class names should be in `camelCase`. Simply import the .scss file into your
+component, for example:
 
 ```
 ├── components
@@ -59,14 +95,26 @@ component with the same name, for example:
 │   ├── Header.scss
 ```
 
-## Environment Variables
-
-In development mode, environment variables are loaded by `dotenv` off the `.env`
-file in your root directory. In production, you'll have to manage these
-yourself. In Heroku, this is simple as running:
+```
+// Header.scss
+.headerContainer {
+  height: 100px;
+  width: 100%;
+}
+```
 
 ```
-heroku config:set FOO=bar
+// Header.js
+import css from './Header.scss';
+
+const Header = (props) => {
+  return (
+    <div className={css.headerContainer}>
+      {...}
+    </div>
+  );
+}
+
 ```
 
 ## Redux Devtools
