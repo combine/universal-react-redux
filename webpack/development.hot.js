@@ -11,18 +11,12 @@ const {
 
 // Webpack Entry Point for dev server
 const entry = [
-  'react-hot-loader/patch',
   'webpack-dev-server/client?' + DEV_SERVER_HOST_URL,
   'webpack/hot/only-dev-server'
 ];
 
 // Additional plugins
 const plugins = [
-  new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    filename: '[name].js',
-    minChunks: module => /node_modules/.test(module.resource)
-  }),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
   new webpack.NamedModulesPlugin()

@@ -2,16 +2,22 @@ import webpack from 'webpack';
 import baseConfig from './production.babel';
 import config from '../config';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
-import { mapValues } from 'lodash';
 import nodeExternals from 'webpack-node-externals';
 import path from 'path';
+import { mapValues, set } from 'lodash';
+import { babel } from '../package.json';
+
+// override base babel options to uglify
+const babelOpts = set(babel, 'presets[0][1].targets.uglify', true);
 
 const plugins = [
-  new webpack.DefinePlugin({
-    'process.env': config.clientEnv
-  }),
+  // we don't need the isomorphic plugin here
+  ...baseConfig.plugins.slice(1),
   new UglifyJSPlugin({
     sourceMap: true
+  }),
+  new webpack.optimize.LimitChunkCountPlugin({
+    maxChunks: 1,
   })
 ];
 
@@ -35,19 +41,24 @@ export default {
     nodeExternals()
   ],
   output: {
-    path: path.join(__dirname, '../', process.env.OUTPUT_PATH, 'renderer'),
+    path: path.join(__dirname, '..', process.env.OUTPUT_PATH, 'renderer'),
     filename: 'handler.built.js',
     libraryTarget: 'commonjs'
   },
-  plugins: [...baseConfig.plugins, ...plugins],
+  plugins,
   module: {
     rules: [
       {
         test: /\.js|jsx$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: babelOpts
         }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       },
       {
         test: /\.scss$/,
