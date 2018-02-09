@@ -11,8 +11,8 @@ import { babel } from '../package.json';
 const babelOpts = set(babel, 'presets[0][1].targets.uglify', true);
 
 const plugins = [
-  // we don't need the isomorphic plugin here
-  ...baseConfig.plugins.slice(1),
+  // we don't need the isomorphic or react-loadable plugins here
+  ...baseConfig.plugins.slice(2),
   new UglifyJSPlugin({
     sourceMap: true
   }),

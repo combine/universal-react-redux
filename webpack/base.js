@@ -20,13 +20,13 @@ const extractTextPlugin = new ExtractTextPlugin({
 });
 const plugins = [
   isoPlugin,
+  new ReactLoadablePlugin({
+    filename: path.join(__dirname, '..', 'react-loadable.json')
+  }),
   extractTextPlugin,
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|es/),
   new webpack.DefinePlugin({
     'process.env': config.clientEnv
-  }),
-  new ReactLoadablePlugin({
-    filename: path.join(__dirname, '..', 'react-loadable.json')
   })
 ];
 
