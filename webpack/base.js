@@ -11,24 +11,37 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { ReactLoadablePlugin } from 'react-loadable/webpack';
 import config from '../config';
 
-const ssr = yn(process.env.SSR) || false;
-const isoPlugin = new IsoPlugin(config.isomorphicConfig).development(isDev);
-const extractTextPlugin = new ExtractTextPlugin({
+let ssr = yn(process.env.SSR) || false;
+let isoPlugin = new IsoPlugin(config.isomorphicConfig).development(isDev);
+let extractTextPlugin = new ExtractTextPlugin({
   filename: isDev ? '[name].css' : '[name].[contenthash].css',
   allChunks: true,
   disable: ssr
 });
-const plugins = [
+
+let plugins = [
   isoPlugin,
-  new ReactLoadablePlugin({
-    filename: path.join(__dirname, '..', 'react-loadable.json')
-  }),
   extractTextPlugin,
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|es/),
   new webpack.DefinePlugin({
     'process.env': config.clientEnv
   })
 ];
+
+let output = {
+  path: path.join(__dirname, '..', process.env.PUBLIC_OUTPUT_PATH),
+  filename: '[name].bundle.js',
+  publicPath: process.env.PUBLIC_ASSET_PATH || '/'
+};
+
+// Enable dynamically imported code-splitting
+if (config.enableDynamicImports) {
+  plugins.unshift(new ReactLoadablePlugin({
+    filename: path.join(__dirname, '..', 'react-loadable.json')
+  }));
+
+  output.chunkFilename = '[name].bundle.js';
+}
 
 if (process.env.ANALYZE) {
   plugins.push(new BundleAnalyzerPlugin());
@@ -39,12 +52,7 @@ export default {
   entry: {
     app: ['./client/index']
   },
-  output: {
-    path: path.join(__dirname, '..', process.env.PUBLIC_OUTPUT_PATH),
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js',
-    publicPath: process.env.PUBLIC_ASSET_PATH || '/'
-  },
+  output,
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
     alias: mapValues(config.clientResolvePaths, str =>

@@ -1,6 +1,9 @@
 const { mapValues, keyBy } = require('lodash');
 
 module.exports = {
+  // Enable or disable dynamic imports (code splitting)
+  enableDynamicImports: false,
+
   // The env vars to expose on the client side. If you add them here, they will
   // be available on the client as process.env[VAR_NAME], same as they would be
   // in node.js.

@@ -2,6 +2,7 @@
 import WebpackDevServer from 'webpack-dev-server';
 import webpack from 'webpack';
 import baseConfig from './base';
+import config from '../config';
 
 const {
   DEV_SERVER_PORT,
@@ -16,41 +17,52 @@ const entry = [
 ];
 
 // Additional plugins
-const plugins = [
+let plugins = [
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
   new webpack.NamedModulesPlugin()
 ];
 
+if (!config.enableDynamicImports) {
+  plugins.push(new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    filename: '[name].js',
+    minChunks: module => /node_modules/.test(module.resource)
+  }));
+}
+
 // Additional loaders
 const loaders = [];
 
-const config = Object.assign({}, baseConfig, {
+const webpackConfig = {
+  ...baseConfig,
   devtool: 'eval',
-  entry: Object.assign({}, baseConfig.entry, {
+  entry: {
+    ...baseConfig.entry,
     app: [
       ...entry,
       ...baseConfig.entry.app
     ]
-  }),
+  },
   plugins: [
     // don't use the first plugin (isomorphic plugin)
     ...baseConfig.plugins,
     ...plugins
   ],
-  module: Object.assign({}, baseConfig.module, {
+  module: {
+    ...baseConfig.module,
     rules: [
       ...baseConfig.module.rules,
       ...loaders
     ]
-  })
-});
+  }
+};
 
 console.info('Firing up Webpack dev server...\n');
 
-new WebpackDevServer(webpack(config), {
+new WebpackDevServer(webpack(webpackConfig), {
   port: DEV_SERVER_PORT,
-  publicPath: config.output.publicPath,
+  publicPath: webpackConfig.output.publicPath,
   hot: true,
   historyApiFallback: true,
   noInfo: false,

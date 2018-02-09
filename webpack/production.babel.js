@@ -13,15 +13,11 @@ export default {
   ...baseConfig,
   output: {
     ...baseConfig.output,
-    ...{
-      filename: '[name].[hash].js'
-    }
+    filename: '[name].[hash].js'
   },
   plugins,
   module: {
     ...baseConfig.module,
-    ...{
-      rules: [...baseConfig.module.rules, ...loaders]
-    }
+    rules: [...baseConfig.module.rules, ...loaders]
   }
 };
