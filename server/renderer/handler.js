@@ -10,7 +10,13 @@ import render from './render';
 import routes from 'routes';
 import configureStore from 'store';
 import App from 'containers/App';
-import stats from '../../react-loadable.json';
+import config from '../../config';
+
+let stats = null;
+
+if (config.enableDynamicImports) {
+  stats = require('../../react-loadable.json');
+}
 
 export default function handleRender(req, res) {
   const initialState = {};
