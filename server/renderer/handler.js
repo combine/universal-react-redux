@@ -102,7 +102,7 @@ export default function handleRender(req, res) {
     // A 301 redirect was rendered somewhere if context.url exists after
     // rendering has happened.
     if (context.url) {
-      return res.redirect(301, context.url);
+      return res.redirect(302, context.url);
     }
 
     return res.status(200).send(markup);
