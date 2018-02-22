@@ -1,0 +1,13 @@
+{
+  "notify": false,
+  "extensions": {
+    "js": {
+      "name": "babel-core/register",
+      "options": {
+        "plugins": [
+          "dynamic-import-node"
+        ]
+      }
+    }
+  }
+}

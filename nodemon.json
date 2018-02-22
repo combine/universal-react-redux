@@ -1,8 +1,0 @@
-{
-  "watch": [
-    "config/**/*.js",
-    "server/**/*.js",
-    "server/**/*.json",
-    "server/templates/**/*.html"
-  ]
-}
