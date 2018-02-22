@@ -32,6 +32,12 @@ export default function handleRender(req, res) {
   // Grab the initial state from our Redux store
   const finalState = store.getState();
 
+  // If SSR is disabled, just render the skeleton HTML.
+  if (!config.enableSSR) {
+    const markup = render(null, finalState, []);
+    return res.send(markup);
+  }
+
   // See react-router's Server Rendering section:
   // https://reacttraining.com/react-router/web/guides/server-rendering
   const matchRoutes = routes => {
@@ -88,20 +94,30 @@ export default function handleRender(req, res) {
 
   let context = {}, modules = [];
 
-  const component = (
-    <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+  const getComponent = () => {
+    let component = (
       <Provider store={store}>
         <StaticRouter context={context} location={req.baseUrl}>
           <App />
         </StaticRouter>
       </Provider>
-    </Loadable.Capture>
-  );
+    );
+
+    if (!config.enableDynamicImports) {
+      return component;
+    }
+
+    return (
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        {component}
+      </Loadable.Capture>
+    );
+  };
 
   // Execute the render only after all promises have been resolved.
   Promise.all(fetchData).then(() => {
     const state = store.getState();
-    const html = renderToString(component);
+    const html = renderToString(getComponent());
     const bundles = stats && getBundles(stats, modules) || [];
     const markup = render(html, state, bundles);
 
