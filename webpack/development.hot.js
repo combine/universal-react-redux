@@ -18,6 +18,7 @@ const entry = [
 
 // Additional plugins
 let plugins = [
+  ...baseConfig.plugins,
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
   new webpack.NamedModulesPlugin()
@@ -31,9 +32,6 @@ if (!config.enableDynamicImports) {
   }));
 }
 
-// Additional loaders
-const loaders = [];
-
 const webpackConfig = {
   ...baseConfig,
   devtool: 'eval',
@@ -44,18 +42,7 @@ const webpackConfig = {
       ...baseConfig.entry.app
     ]
   },
-  plugins: [
-    // don't use the first plugin (isomorphic plugin)
-    ...baseConfig.plugins,
-    ...plugins
-  ],
-  module: {
-    ...baseConfig.module,
-    rules: [
-      ...baseConfig.module.rules,
-      ...loaders
-    ]
-  }
+  plugins
 };
 
 console.info('Firing up Webpack dev server...\n');

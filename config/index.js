@@ -1,6 +1,9 @@
 const { mapValues, keyBy } = require('lodash');
 
 module.exports = {
+  // Enable or disable server-side rendering
+  enableSSR: true,
+
   // Enable or disable dynamic imports (code splitting)
   enableDynamicImports: false,
 
