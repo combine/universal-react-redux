@@ -103,15 +103,15 @@ export default function handleRender(req, res) {
       </Provider>
     );
 
-    if (!config.enableDynamicImports) {
-      return component;
+    if (config.enableDynamicImports) {
+      return (
+        <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+          {component}
+        </Loadable.Capture>
+      );
     }
 
-    return (
-      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-        {component}
-      </Loadable.Capture>
-    );
+    return component;
   };
 
   // Execute the render only after all promises have been resolved.
