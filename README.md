@@ -160,20 +160,16 @@ higher. If you experience errors, please upgrade your version of Node.js.
 
 ## Testing
 
-The default testing framework is Mocha, though you can use whatever you want.
-Make sure you have it installed:
+The default testing framework is Jest, though you can use whatever you want.
+
+Tests should reside alongside the modules they are testing:
 
 ```
-npm install -g mocha
-```
-
-Tests should reside in `test/spec` in their appropriate folders:
-
-```
-├── test
-│   ├── spec
-│   │   ├── api
-│   │   │   ├── todos.test.js
+├── server
+│   ├── api
+│   │   ├── todos
+│   │   │   ├── todos.controller.js
+│   │   │   ├── todos.controller.test.js
 ```
 
 Tests can be written with ES2015, since it passes through `babel-register`.
@@ -184,21 +180,19 @@ To run a single test:
 
 ```
 npm test /path/to/single.test.js
-```
 
-To run a directory of tests:
-
-```
-npm test /path/to/test/directory
+// Or, to watch for changes
+npm run test:watch /path/to/single.test.js
 ```
 
 To run all tests:
 
 ```
 npm run test:all
-```
 
-This will run all tests in the `test/spec` directory.
+// Or, to watch for changes
+npm run test:all:watch
+```
 
 ## Running ESLint
 
