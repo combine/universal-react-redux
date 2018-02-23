@@ -20,3 +20,14 @@ describe('GET /api/todos', function() {
       });
   });
 });
+
+describe('GET /api/todos/:id', function() {
+  test('endpoint returns a specific todos', function() {
+    return agent
+      .get('/api/todos/1')
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.id).toEqual(1);
+      });
+  });
+});
