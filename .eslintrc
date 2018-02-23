@@ -34,7 +34,8 @@
     "node": true
   },
   "globals": {
-    "expect": true
+    "expect": true,
+    "__non_webpack_require__": true
   },
   "extends": [
     "eslint:recommended",

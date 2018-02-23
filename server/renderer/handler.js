@@ -14,8 +14,14 @@ import config from '../../config';
 
 let stats = null;
 
+// This is a small 'hack' to tell webpack to avoid resolving the below file
+// during compilation, since react-loadable.json may or may not exist.
+const requireFunc = typeof __webpack_require__ === 'function'
+  ? __non_webpack_require__
+  : require;
+
 if (config.enableDynamicImports) {
-  stats = require('../../react-loadable.json');
+  stats = requireFunc('../../react-loadable.json');
 }
 
 export default function handleRender(req, res) {
