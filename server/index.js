@@ -1,22 +1,12 @@
+// Register the `_moduleAliases` as defined in package.json.
+require('module-alias/register');
+
 const fs = require('fs');
 const path = require('path');
-const config = require('../config');
+const config = require('$config');
 const env = process.env.NODE_ENV || 'development';
-const { addPath } = require('app-module-path');
 const Loadable = require('react-loadable');
 const chokidar = require('chokidar');
-
-global.__basedir = path.join(__dirname, '..');
-
-// Lets us access module paths inside this server directory.
-addPath(path.join(__dirname));
-
-// Adds common/js to the app module path so we can access local modules without
-// having to use relative paths on the server-side. This is done on the client
-// side using webpack's `resolve`.
-addPath(path.join(__dirname, '../server'));
-addPath(path.join(__dirname, '../common'));
-addPath(path.join(__dirname, '../common/js'));
 
 // HTML files are read as pure strings
 require.extensions['.html'] = (module, filename) => {

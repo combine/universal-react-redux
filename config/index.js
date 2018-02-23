@@ -1,3 +1,4 @@
+
 module.exports = {
   // Enable or disable server-side rendering
   enableSSR: true,
@@ -18,37 +19,6 @@ module.exports = {
   /* The identifier to use for css-modules.
    */
   cssModulesIdentifier: '[name]__[local]__[hash:base64:5]',
-
-  /* Paths for webpack to resolve into non-relative directories, so that instead
-   * of having to use relative paths:
-   *
-   * import SomeComponents from '../../../../SomeComponent';
-   *
-   * we can write this instead:
-   *
-   * import SomeComponent from 'components/SomeComponent';
-   */
-  clientResolvePaths: {
-    actions: 'common/js/actions',
-    components: 'common/js/components',
-    constants: 'common/js/constants',
-    containers: 'common/js/containers',
-    css: 'common/css',
-    fonts: 'common/fonts',
-    images: 'common/images',
-    lib: 'common/js/lib',
-    pages: 'common/js/pages',
-    reducers: 'common/js/reducers',
-    routes: 'common/js/routes',
-    store: 'common/js/store',
-    templates: 'common/templates'
-  },
-
-  serverResolvePaths: {
-    api: 'server/api',
-    constants: 'common/js/constants',
-    middleware: 'server/middleware'
-  },
 
   // Isomorphic configuration
   isomorphicConfig: {

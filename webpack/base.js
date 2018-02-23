@@ -9,8 +9,10 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { ReactLoadablePlugin } from 'react-loadable/webpack';
 import { mapValues, keyBy } from 'lodash';
+import { _moduleAliases } from '../package.json';
 import config from '../config';
 
+let cwd = process.cwd();
 let ssr = yn(process.env.SSR) || false;
 let isoPlugin = new IsoPlugin(config.isomorphicConfig).development(isDev);
 let extractTextPlugin = new ExtractTextPlugin({
@@ -57,8 +59,8 @@ export default {
   output,
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
-    alias: mapValues(config.clientResolvePaths, str =>
-      path.join(process.cwd(), ...str.split('/'))
+    alias: mapValues(_moduleAliases, aliasPath =>
+      path.join(cwd, ...aliasPath.split('/'))
     )
   },
   module: {

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import * as actions from 'actions/todos';
+import * as actions from '@actions/todos';
 import { Container } from 'semantic-ui-react';
-import { TodoList, TodoForm } from 'components/todos';
+import { TodoList, TodoForm } from '@components/todos';
 
 class TodosContainer extends Component {
   static propTypes = {

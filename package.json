@@ -36,6 +36,26 @@
       "syntax-dynamic-import"
     ]
   },
+  "_moduleAliases": {
+    "@css": "common/css",
+    "@fonts": "common/fonts",
+    "@images": "common/images",
+    "@actions": "common/js/actions",
+    "@components": "common/js/components",
+    "@constants": "common/js/constants",
+    "@containers": "common/js/containers",
+    "@lib": "common/js/lib",
+    "@middleware": "common/js/middleware",
+    "@pages": "common/js/pages",
+    "@reducers": "common/js/reducers",
+    "@routes": "common/js/routes",
+    "@store": "common/js/store",
+    "$api": "server/api",
+    "$lib": "server/lib",
+    "$middleware": "server/middleware",
+    "$templates": "server/templates",
+    "$config": "config"
+  },
   "scripts": {
     "start": "better-npm-run dev:start",
     "prod": "better-npm-run prod:build && better-npm-run serve",
@@ -187,7 +207,6 @@
     "yn": "^2.0.0"
   },
   "dependencies": {
-    "app-module-path": "^2.2.0",
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "chokidar": "^2.0.0",
@@ -201,6 +220,7 @@
     "history": "^4.7.2",
     "include-media": "^1.4.9",
     "lodash": "^4.17.4",
+    "module-alias": "^2.0.6",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",

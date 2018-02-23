@@ -5,7 +5,7 @@ import compression from 'compression';
 import Api from './api';
 import cookieParser from 'cookie-parser';
 import ReactRenderer from './renderer';
-import { httpsRedirect } from 'middleware';
+import { httpsRedirect } from '$middleware';
 
 const env = process.env.NODE_ENV || 'development';
 const app = new express();

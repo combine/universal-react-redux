@@ -5,9 +5,9 @@ import {
   FETCH_TODOS_REQUEST,
   FETCH_TODOS_SUCCESS,
   FETCH_TODOS_FAILURE
-} from 'constants/index';
-import api from 'lib/api';
-import generateActionCreator from 'lib/generateActionCreator';
+} from '@constants/index';
+import api from '@lib/api';
+import generateActionCreator from '@lib/generateActionCreator';
 
 export const addTodo = generateActionCreator(ADD_TODO, 'text');
 export const removeTodo = generateActionCreator(REMOVE_TODO, 'id');

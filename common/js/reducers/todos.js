@@ -1,7 +1,7 @@
 import {
   ADD_TODO, REMOVE_TODO, TOGGLE_TODO,
   FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE
-} from 'constants/index';
+} from '@constants/index';
 
 const defaultState = {
   todos: [],

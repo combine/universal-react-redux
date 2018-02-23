@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'semantic-ui-react';
-import { TodoItem } from 'components/todos';
+import { TodoItem } from '@components/todos';
 import classnames from 'classnames';
 import css from './index.scss';
 

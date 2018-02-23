@@ -3,13 +3,13 @@ import { Provider } from 'react-redux';
 import { StaticRouter, matchPath } from 'react-router';
 import { setMobileDetect, mobileParser } from 'react-responsive-redux';
 import { renderToString } from 'react-dom/server';
-import { ErrorPage } from 'components/common';
+import { ErrorPage } from '@components/common';
 import { getBundles } from 'react-loadable/webpack';
 import Loadable from 'react-loadable';
 import render from './render';
-import routes from 'routes';
-import configureStore from 'store';
-import App from 'containers/App';
+import routes from '@routes';
+import configureStore from '@store';
+import App from '@containers/App';
 import config from '../../config';
 
 let stats = null;

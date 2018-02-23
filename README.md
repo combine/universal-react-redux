@@ -71,6 +71,30 @@ If using Heroku, simply add a `Procfile` in the root directory. The
 web: npm run serve
 ```
 
+## Path Aliases
+
+In `package.json`, there is a property named `_moduleAliases`. This object
+defines the require() aliases used by both webpack and node.
+
+Aliased paths are prefixed with one of two symbols, which denote different
+things:
+
+`@` - paths in the `common/` folder, e.g. `@components` or `@actions`, etc.
+`$` - paths in the `server/` folder
+
+Aliases are nice to use for convenience, and lets us avoid using relative paths
+in our components:
+
+```
+// This sucks
+import SomeComponent from '../../../components/SomeComponent';
+
+// This is way better
+import SomeComponent from '@components/SomeComponent';
+```
+
+You can add additional aliases in `package.json` to your own liking.
+
 ## Environment Variables
 
 In development mode, environment variables are loaded by `dotenv` off the `.env`
