@@ -4,11 +4,11 @@ if (isDev) require('dotenv').load();
 import yn from 'yn';
 import path from 'path';
 import webpack from 'webpack';
-import mapValues from 'lodash/mapValues';
 import IsoPlugin from 'webpack-isomorphic-tools/plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { ReactLoadablePlugin } from 'react-loadable/webpack';
+import { mapValues, keyBy } from 'lodash';
 import config from '../config';
 
 let ssr = yn(process.env.SSR) || false;
@@ -24,7 +24,9 @@ let plugins = [
   extractTextPlugin,
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|es/),
   new webpack.DefinePlugin({
-    'process.env': config.clientEnv
+    'process.env': mapValues(keyBy(config.clientEnvVars), (env) => {
+      return JSON.stringify(process.env[env]);
+    })
   })
 ];
 

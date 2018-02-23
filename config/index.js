@@ -1,5 +1,3 @@
-const { mapValues, keyBy } = require('lodash');
-
 module.exports = {
   // Enable or disable server-side rendering
   enableSSR: true,
@@ -12,13 +10,10 @@ module.exports = {
   // in node.js.
   //
   // **WARNING**: Be careful not to expose any secrets here!
-  clientEnv: mapValues(
-    keyBy([
-      'NODE_ENV',
-      'APPLICATION_BASE_URL'
-    ]),
-    (env) => JSON.stringify(process.env[env])
-  ),
+  clientEnvVars: [
+    'NODE_ENV',
+    'APPLICATION_BASE_URL'
+  ],
 
   /* The identifier to use for css-modules.
    */
