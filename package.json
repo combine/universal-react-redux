@@ -93,13 +93,13 @@
       }
     },
     "test": {
-      "command": "$(npm bin)/mocha --recursive ./test/support/helper.js",
+      "command": "$(npm bin)/jest",
       "env": {
         "NODE_ENV": "test"
       }
     },
     "test:all": {
-      "command": "$(npm bin)/mocha --recursive ./test/support/helper.js ./test/spec",
+      "command": "$(npm bin)/jest \"(.+)\\.test\\.js\"",
       "env": {
         "NODE_ENV": "test"
       }
@@ -161,6 +161,7 @@
     "expose-loader": "^0.7.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
+    "jest": "^22.4.2",
     "json-loader": "^0.5.7",
     "mocha": "^4.1.0",
     "node-dev": "^3.1.3",
