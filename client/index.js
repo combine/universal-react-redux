@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import './styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -7,8 +8,6 @@ import createHistory from 'history/createBrowserHistory';
 import configureStore from 'store';
 import App from 'containers/App';
 import Loadable from 'react-loadable';
-
-import './styles';
 
 // Hydrate the redux store from server state.
 const initialState = window.__INITIAL_STATE__;
