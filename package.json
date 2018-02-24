@@ -119,7 +119,7 @@
       }
     },
     "test:all": {
-      "command": "$(npm bin)/jest \"(.+)\\.test\\.js\"",
+      "command": "$(npm bin)/jest --config ./jest.config.js",
       "env": {
         "NODE_ENV": "test"
       }
@@ -181,6 +181,7 @@
     "expose-loader": "^0.7.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.2",
     "json-loader": "^0.5.7",
     "node-dev": "^3.1.3",
