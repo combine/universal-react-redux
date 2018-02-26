@@ -10,6 +10,7 @@ boilerplate comes with:
 - CSS, SASS and [css-modules](https://github.com/css-modules/css-modules) support with hot reloading and no [flash of unstyled content](https://en.wikipedia.org/wiki/Flash_of_unstyled_content) ([css-hot-loader](https://github.com/shepherdwind/css-hot-loader))
 - Routing with [react-router-v4](https://github.com/ReactTraining/react-router)
 - Full production builds that do not rely on `babel-node`.
+- Pre-configured testing tools with `jest` and `enzyme` to work with css modules, static files, and aliased module paths.
 
 ## Philosophy
 
