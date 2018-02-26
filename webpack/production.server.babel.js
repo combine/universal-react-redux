@@ -4,7 +4,7 @@ import config from '../config';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 import path from 'path';
-import { mapValues, set } from 'lodash';
+import { set } from 'lodash';
 import { babel } from '../package.json';
 
 // override base babel options to uglify
@@ -26,13 +26,6 @@ export default {
   context: null,
   target: 'node',
   entry: ['./server/renderer/handler.js'],
-  resolve: {
-    extensions: ['.js', '.jsx', '.scss'],
-    alias: mapValues(
-      { ...config.clientResolvePaths, ...config.serverResolvePaths },
-      str => path.join(process.cwd(), ...str.split('/'))
-    )
-  },
   externals: [
     // images are handled by isomorphic webpack.
     // html files are required directly
