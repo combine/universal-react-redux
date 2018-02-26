@@ -186,14 +186,17 @@ higher. If you experience errors, please upgrade your version of Node.js.
 
 The default testing framework is Jest, though you can use whatever you want.
 
-Tests should reside alongside the modules they are testing:
+Tests and their corresponding files such as Jest snapshots, should be co-located
+alongside the modules they are testing, in a `spec/` folder. For example:
 
 ```
-├── server
-│   ├── api
-│   │   ├── todos
-│   │   │   ├── todos.controller.js
-│   │   │   ├── todos.controller.test.js
+├── components
+│   ├── todos
+│   │   ├── TodoForm
+│   │   │   ├── spec
+│   │   │   │   ├── TodoForm.test.js
+│   │   │   ├── index.js
+│   │   │   ├── index.scss
 ```
 
 Tests can be written with ES2015, since it passes through `babel-register`.

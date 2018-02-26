@@ -118,20 +118,8 @@
         "NODE_ENV": "test"
       }
     },
-    "test:all": {
-      "command": "$(npm bin)/jest --config ./jest.config.js",
-      "env": {
-        "NODE_ENV": "test"
-      }
-    },
     "test:watch": {
       "command": "npm run test -- --watch",
-      "env": {
-        "NODE_ENV": "test"
-      }
-    },
-    "test:all:watch": {
-      "command": "npm run test:all -- --watch",
       "env": {
         "NODE_ENV": "test"
       }
@@ -174,6 +162,9 @@
     "dotenv": "^4.0.0",
     "dotenv-safe": "^4.0.4",
     "dotenv-webpack": "^1.5.4",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.1",
     "eslint": "^4.16.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-babel": "^4.1.2",
