@@ -1,7 +1,7 @@
 {
   "name": "universal-react-redux",
   "description": "Universal React/Redux boilerplate with sensible defaults.",
-  "version": "6.1.1",
+  "version": "6.2.0",
   "license": "MIT",
   "main": "client/index.js",
   "repository": {
