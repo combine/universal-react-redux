@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TodoList renders correctly 1`] = `
+<List
+  className="todos"
+  divided={true}
+>
+  <TodoItem
+    key="0"
+    onChange={[Function]}
+    onRemove={[Function]}
+    todo={
+      Object {
+        "completed": true,
+        "id": 1,
+        "text": "Learn React",
+      }
+    }
+  />
+  <TodoItem
+    key="1"
+    onChange={[Function]}
+    onRemove={[Function]}
+    todo={
+      Object {
+        "completed": true,
+        "id": 2,
+        "text": "Learn Redux",
+      }
+    }
+  />
+</List>
+`;

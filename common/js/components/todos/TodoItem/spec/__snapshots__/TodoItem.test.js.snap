@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TodoItem renders correctly 1`] = `
+<ListItem
+  className="todo extra"
+>
+  <ListContent
+    floated="right"
+  >
+    <Button
+      as="button"
+      icon="remove"
+      onClick={[Function]}
+      size="mini"
+    />
+  </ListContent>
+  <ListContent
+    floated="left"
+  >
+    <Checkbox
+      onChange={[Function]}
+      type="checkbox"
+    />
+  </ListContent>
+  <ListContent
+    className="text"
+  >
+    Work
+  </ListContent>
+</ListItem>
+`;

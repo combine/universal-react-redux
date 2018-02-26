@@ -1,6 +1,6 @@
 import request from 'supertest';
 import express from 'express';
-import todos from './index';
+import todos from '../index';
 
 let app, agent;
 

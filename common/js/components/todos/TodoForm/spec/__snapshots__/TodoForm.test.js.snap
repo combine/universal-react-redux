@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TodoForm renders correctly 1`] = `
+<TodoForm>
+  <Form
+    as="form"
+    className="todoForm"
+    onSubmit={[Function]}
+  >
+    <form
+      className="ui form todoForm"
+      onSubmit={[Function]}
+    >
+      <FormGroup>
+        <div
+          className="fields"
+        >
+          <FormInput
+            as={[Function]}
+            control={[Function]}
+            onChange={[Function]}
+            placeholder="Add a todo..."
+            type="text"
+            value=""
+          >
+            <FormField
+              control={[Function]}
+              onChange={[Function]}
+              placeholder="Add a todo..."
+              type="text"
+              value=""
+            >
+              <div
+                className="field"
+              >
+                <Input
+                  onChange={[Function]}
+                  placeholder="Add a todo..."
+                  type="text"
+                  value=""
+                >
+                  <div
+                    className="ui input"
+                  >
+                    <input
+                      key="text"
+                      onChange={[Function]}
+                      placeholder="Add a todo..."
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </Input>
+              </div>
+            </FormField>
+          </FormInput>
+          <FormButton
+            as={[Function]}
+            content="Add"
+            control={[Function]}
+            icon="plus"
+          >
+            <FormField
+              content="Add"
+              control={[Function]}
+              icon="plus"
+            >
+              <div
+                className="field"
+              >
+                <Button
+                  as="button"
+                  content="Add"
+                  icon="plus"
+                >
+                  <button
+                    className="ui button"
+                    onClick={[Function]}
+                    role="button"
+                  >
+                    <Icon
+                      as="i"
+                      key="plus"
+                      name="plus"
+                    >
+                      <i
+                        aria-hidden="true"
+                        className="plus icon"
+                      />
+                    </Icon>
+                    Add
+                  </button>
+                </Button>
+              </div>
+            </FormField>
+          </FormButton>
+        </div>
+      </FormGroup>
+    </form>
+  </Form>
+</TodoForm>
+`;
