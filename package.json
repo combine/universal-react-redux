@@ -19,14 +19,13 @@
         {
           "targets": {
             "node": "current",
-            "uglify": true
+            "uglify": false
           }
         }
       ],
       "react"
     ],
     "plugins": [
-      "react-hot-loader/babel",
       "react-loadable/babel",
       "transform-es2015-modules-commonjs",
       "transform-class-properties",
@@ -34,7 +33,19 @@
       "transform-export-extensions",
       "transform-object-rest-spread",
       "syntax-dynamic-import"
-    ]
+    ],
+    "env": {
+      "development": {
+        "plugins": [
+          "react-hot-loader/babel"
+        ]
+      },
+      "production": {
+        "plugins": [
+          "transform-react-remove-prop-types"
+        ]
+      }
+    }
   },
   "_moduleAliases": {
     "@css": "common/css",
@@ -150,6 +161,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
