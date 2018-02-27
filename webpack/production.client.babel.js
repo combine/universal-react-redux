@@ -5,19 +5,18 @@ import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import merge from 'webpack-merge';
 import config from '../config';
 
-const commonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin({
-  name: 'vendor',
-  filename: '[name].[hash].js',
-  minChunks: module => /node_modules/.test(module.resource)
-});
-
 export default merge(baseConfig, {
   output: {
-    filename: '[name].[hash].js'
+    filename: '[name].[hash].js',
+    chunkFilename: config.enableDynamicImports ? '[name].[hash].js' : undefined
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: true
+    }
   },
   plugins: [
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.BannerPlugin({
       banner:
         'hash:[hash], chunkhash:[chunkhash], name:[name], ' +
@@ -25,14 +24,14 @@ export default merge(baseConfig, {
     }),
     new UglifyJSPlugin({
       uglifyOptions: {
+        parallel: 4,
         compress: {
           warnings: false
         },
         mangle: true,
         output: {
           comments: false
-        },
-        sourceMap: true
+        }
       }
     }),
     new CompressionPlugin({
@@ -41,7 +40,6 @@ export default merge(baseConfig, {
       test: /\.css$|\.js$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
-    }),
-    ...(!config.enableDynamicImports ? [commonsChunkPlugin] : [])
+    })
   ]
 });

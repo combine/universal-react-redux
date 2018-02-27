@@ -4,14 +4,14 @@ module.exports = {
   enableSSR: true,
 
   // Enable or disable dynamic imports (code splitting)
-  enableDynamicImports: false,
+  enableDynamicImports: true,
 
   // The env vars to expose on the client side. If you add them here, they will
   // be available on the client as process.env[VAR_NAME], same as they would be
   // in node.js.
   //
   // **WARNING**: Be careful not to expose any secrets here!
-  clientEnvVars: [
+  clientEnv: [
     'NODE_ENV',
     'APPLICATION_BASE_URL'
   ],

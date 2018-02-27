@@ -1,20 +1,39 @@
-import webpack from 'webpack';
-import baseConfig from './base';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 import merge from 'webpack-merge';
 import path from 'path';
 import config from '../config';
 import babelOpts from './babel.config.ssr';
+import { enableDynamicImports } from '../config';
+import baseConfig, { basePlugins, analyzeBundle } from './base';
+import { set, filter } from 'lodash';
 
-const mergeStrategy = {
-  entry: 'replace',
-  plugins: 'replace',
-  module: 'replace'
+const allowedPlugin = (plugin, key) => {
+  switch (key) {
+    case 'reactLoadablePlugin':
+      return enableDynamicImports;
+    case 'isomorphicPlugin':
+      return false;
+    case 'bundleAnalyzerPlugin':
+      return analyzeBundle;
+    default:
+      return true;
+  }
 };
 
-export default merge.strategy(mergeStrategy)(baseConfig, {
+export default merge.strategy({
+  entry: 'replace',
+  plugins: 'replace',
+  module: 'replace',
+  optimization: 'replace'
+})(baseConfig, {
   context: null,
+  mode: 'development',
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: true
+    }
+  },
   target: 'node',
   entry: ['./server/renderer/handler.js'],
   externals: [
@@ -29,16 +48,7 @@ export default merge.strategy(mergeStrategy)(baseConfig, {
     filename: 'handler.built.js',
     libraryTarget: 'commonjs'
   },
-  plugins: [
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new UglifyJSPlugin({
-      sourceMap: true
-    }),
-    new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1,
-    })
-  ],
+  plugins: [...filter(basePlugins, allowedPlugin)],
   module: {
     rules: [
       {
@@ -46,12 +56,9 @@ export default merge.strategy(mergeStrategy)(baseConfig, {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: babelOpts
+          // tell babel to uglify production server code for SSR rendering
+          options: set(babelOpts, 'presets[0][1].targets.uglify', true)
         }
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       },
       {
         test: /\.scss$/,
