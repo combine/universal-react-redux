@@ -124,7 +124,7 @@
       }
     },
     "test": {
-      "command": "$(npm bin)/jest",
+      "command": "$(npm bin)/jest -c ./test/support/jest.config.js",
       "env": {
         "NODE_ENV": "test"
       }

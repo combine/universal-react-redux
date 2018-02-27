@@ -1,9 +1,12 @@
 const { mapValues, mapKeys } = require('lodash');
-const { _moduleAliases } = require('./package.json');
+const { _moduleAliases } = require('../../package.json');
+const escapeStringRegexp = require('escape-string-regexp');
+
+const toRegex = (alias) => `^${escapeStringRegexp(alias)}/(.*)$`;
 
 // Maps _moduleAliases in package.json to Jest's regex format that it can read
 const moduleAliasesMap = mapValues(
-  mapKeys(_moduleAliases, (_, alias) => `${alias}/(.*)$`),
+  mapKeys(_moduleAliases, (_, alias) => toRegex(alias)),
   path => `<rootDir>/${path}/$1`
 );
 
@@ -15,8 +18,10 @@ const staticFiles =
 module.exports = {
   verbose: true,
   moduleFileExtensions: ['js', 'jsx'],
+  rootDir: process.cwd(),
   snapshotSerializers: ['enzyme-to-json/serializer'],
-  setupTestFrameworkScriptFile: '<rootDir>/jest.setup.js',
+  setupTestFrameworkScriptFile: '<rootDir>/test/support/jest.setup.js',
+  globalSetup: '<rootDir>/test/support/jest.globalSetup.js',
   moduleNameMapper: {
     ...moduleAliasesMap,
     [staticFiles]: '<rootDir>/__mocks__/fileMock.js',
