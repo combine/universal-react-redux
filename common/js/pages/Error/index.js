@@ -1,8 +1,3 @@
-/**
- * 404.js
- * Renders a 404 page.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 

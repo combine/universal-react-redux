@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { StaticRouter, matchPath } from 'react-router';
 import { setMobileDetect, mobileParser } from 'react-responsive-redux';
 import { renderToString } from 'react-dom/server';
-import { ErrorPage } from '@components/common';
 import { getBundles } from 'react-loadable/webpack';
 import Loadable from 'react-loadable';
 import render from './render';
@@ -25,7 +24,8 @@ if (config.enableDynamicImports) {
 }
 
 export default function handleRender(req, res) {
-  const initialState = {};
+  let context = {}, modules = [], initialState = {};
+
   // Create a new Redux store instance
   const store = configureStore(initialState);
 
@@ -82,29 +82,16 @@ export default function handleRender(req, res) {
 
   const matches = matchRoutes(routes);
 
-  // No matched route, render a 404 page.
+  // No matched route, send an error.
   if (!matches.length) {
-    res.contentType('text/html');
-    res.status(404).send(render(<ErrorPage code={404} />, finalState));
-    return;
+    return res.status(500).send('Server Error');
   }
-
-  // There's a match, render the component with the matched route, firing off
-  // any fetchData methods that are statically defined on the server.
-  const fetchData = matches.map(match => {
-    const { fetchData, ...rest } = match; // eslint-disable-line no-unused-vars
-
-    // return fetch data Promise, excluding unnecessary fetchData method
-    return match.fetchData({ store, ...rest });
-  });
-
-  let context = {}, modules = [];
 
   const getComponent = () => {
     let component = (
       <Provider store={store}>
         <StaticRouter context={context} location={req.baseUrl}>
-          <App />
+          <App  />
         </StaticRouter>
       </Provider>
     );
@@ -120,12 +107,22 @@ export default function handleRender(req, res) {
     return component;
   };
 
+  // There's a match, render the component with the matched route, firing off
+  // any fetchData methods that are statically defined on the server.
+  const fetchData = matches.map(match => {
+    const { fetchData, ...rest } = match; // eslint-disable-line no-unused-vars
+
+    // return fetch data Promise, excluding unnecessary fetchData method
+    return match.fetchData({ store, ...rest });
+  });
+
   // Execute the render only after all promises have been resolved.
   Promise.all(fetchData).then(() => {
     const state = store.getState();
     const html = renderToString(getComponent());
     const bundles = stats && getBundles(stats, modules) || [];
     const markup = render(html, state, bundles);
+    const status = matches.length && matches[0].match.path === '*' ? 404 : 200;
 
     // A 301 redirect was rendered somewhere if context.url exists after
     // rendering has happened.
@@ -133,6 +130,7 @@ export default function handleRender(req, res) {
       return res.redirect(302, context.url);
     }
 
-    return res.status(200).send(markup);
+    res.contentType('text/html');
+    return res.status(status).send(markup);
   });
 }
