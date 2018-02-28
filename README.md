@@ -80,8 +80,9 @@ defines the require() aliases used by both webpack and node.
 Aliased paths are prefixed with one of two symbols, which denote different
 things:
 
-`@` - paths in the `common/` folder, e.g. `@components` or `@actions`, etc.
-`$` - paths in the `server/` folder
+`@` - component and template paths, e.g. `@components`
+
+`$` - server paths that are built by babel, e.g. `server/api`
 
 Aliases are nice to use for convenience, and lets us avoid using relative paths
 in our components:
